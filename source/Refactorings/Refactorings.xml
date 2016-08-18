@@ -57,6 +57,11 @@
     </Syntaxes>
     <Scope>method name</Scope>
   </Refactoring>
+  <Refactoring Id="AddDefaultValueToArgument" Title="Add default value to argument" ExtensionVersion="0.0.0">
+    <Syntaxes>
+      <Syntax>missing argument</Syntax>
+    </Syntaxes>
+  </Refactoring>
   <Refactoring Id="AddDefaultValueToParameter" Title="Add default value to parameter" ExtensionVersion="0.92.0">
     <Syntaxes>
       <Syntax>parameter without default value</Syntax>

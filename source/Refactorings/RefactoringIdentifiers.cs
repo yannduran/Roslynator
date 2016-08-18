@@ -13,6 +13,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
         public const string AddBracesToSwitchSections = "AddBracesToSwitchSections";
         public const string AddCastExpression = "AddCastExpression";
         public const string AddConfigureAwait = "AddConfigureAwait";
+        public const string AddDefaultValueToArgument = "AddDefaultValueToArgument";
         public const string AddDefaultValueToParameter = "AddDefaultValueToParameter";
         public const string AddDefaultValueToReturnStatement = "AddDefaultValueToReturnStatement";
         public const string AddIdentifierToVariableDeclaration = "AddIdentifierToVariableDeclaration";

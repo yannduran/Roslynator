@@ -19,6 +19,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             AddBracesToSwitchSections = true;
             AddCastExpression = true;
             AddConfigureAwait = true;
+            AddDefaultValueToArgument = true;
             AddDefaultValueToParameter = true;
             AddDefaultValueToReturnStatement = true;
             AddIdentifierToVariableDeclaration = true;
@@ -159,6 +160,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             SetIsEnabled(RefactoringIdentifiers.AddBracesToSwitchSections, AddBracesToSwitchSections);
             SetIsEnabled(RefactoringIdentifiers.AddCastExpression, AddCastExpression);
             SetIsEnabled(RefactoringIdentifiers.AddConfigureAwait, AddConfigureAwait);
+            SetIsEnabled(RefactoringIdentifiers.AddDefaultValueToArgument, AddDefaultValueToArgument);
             SetIsEnabled(RefactoringIdentifiers.AddDefaultValueToParameter, AddDefaultValueToParameter);
             SetIsEnabled(RefactoringIdentifiers.AddDefaultValueToReturnStatement, AddDefaultValueToReturnStatement);
             SetIsEnabled(RefactoringIdentifiers.AddIdentifierToVariableDeclaration, AddIdentifierToVariableDeclaration);
@@ -355,6 +357,16 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
         [Description("Syntax: awaitable method invocation\r\nScope: method name")]
         [TypeConverter(typeof (EnabledDisabledConverter))]
         public bool AddConfigureAwait
+        {
+            get;
+            set;
+        }
+
+        [Category(RefactoringCategory)]
+        [DisplayName("Add default value to argument")]
+        [Description("Syntax: missing argument")]
+        [TypeConverter(typeof (EnabledDisabledConverter))]
+        public bool AddDefaultValueToArgument
         {
             get;
             set;
