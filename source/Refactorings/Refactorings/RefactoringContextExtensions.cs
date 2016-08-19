@@ -379,7 +379,6 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                     var memberDeclaration = node as MemberDeclarationSyntax;
                     if (memberDeclaration != null)
                     {
-#if DEBUG
                         if (!fSortMembers
                             && node.IsKind(
                                 SyntaxKind.NamespaceDeclaration,
@@ -390,7 +389,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                             SortMemberDeclarationsRefactoring.ComputeRefactorings(context, memberDeclaration);
                             fSortMembers = true;
                         }
-#endif
+
                         if (!fMemberDeclaration)
                         {
                             await MemberDeclarationRefactoring.ComputeRefactoringsAsync(context, memberDeclaration).ConfigureAwait(false);
