@@ -494,6 +494,9 @@
             <a href="http://github.com/JosefPihrt/RoslynTools/blob/master/Refactorings.md#simplify-lambda-expression">Simplify lambda expression</a>
         </li>
         <li>
+            <a href="http://github.com/JosefPihrt/RoslynTools/blob/master/Refactorings.md#sort-switch-sections">Sort switch sections</a>
+        </li>
+        <li>
             <a href="http://github.com/JosefPihrt/RoslynTools/blob/master/Refactorings.md#split-attributes">Split attributes</a>
         </li>
         <li>

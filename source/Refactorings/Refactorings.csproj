@@ -55,6 +55,9 @@
     <Compile Include="Refactorings\IntroduceAndInitialize\IntroduceAndInitializeFieldRefactoring.cs" />
     <Compile Include="Refactorings\NodeInList\RewriterInfo.cs" />
     <Compile Include="Refactorings\ExtractExpressionFromCondition\ExtractExpressionFromWhileConditionRefactoring.cs" />
+    <Compile Include="Refactorings\SortSwitchSections\SwitchSectionSorter.cs" />
+    <Compile Include="Refactorings\SortSwitchSections\SwitchLabelSorter.cs" />
+    <Compile Include="Refactorings\SortSwitchSections\SortSwitchSectionsRefactoring.cs" />
     <Compile Include="Refactorings\WrapSelectedLines\WrapInIfDirectiveRefactoring.cs" />
     <Compile Include="Refactorings\AddUsingDirectiveRefactoring.cs" />
     <Compile Include="Refactorings\CollapseToInitializerRefactoring.cs" />

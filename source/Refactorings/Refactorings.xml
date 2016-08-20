@@ -821,6 +821,12 @@
     </Syntaxes>
     <Scope>body</Scope>
   </Refactoring>
+  <Refactoring Id="SortSwitchSections" Title="Sort switch sections" ExtensionVersion="0.0.0">
+    <Syntaxes>
+      <Syntax>switch statement</Syntax>
+    </Syntaxes>
+    <Scope>switch keyword</Scope>
+  </Refactoring>
   <Refactoring Id="SplitAttributes" Title="Split attributes" ExtensionVersion="0.9.50">
     <Syntaxes>
       <Syntax>selected attribute list</Syntax>

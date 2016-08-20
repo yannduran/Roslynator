@@ -128,6 +128,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
         public const string ReplaceWhileStatementWithDoStatement = "ReplaceWhileStatementWithDoStatement";
         public const string ReverseForLoop = "ReverseForLoop";
         public const string SimplifyLambdaExpression = "SimplifyLambdaExpression";
+        public const string SortSwitchSections = "SortSwitchSections";
         public const string SplitAttributes = "SplitAttributes";
         public const string SplitVariableDeclaration = "SplitVariableDeclaration";
         public const string SwapExpressionsInBinaryExpression = "SwapExpressionsInBinaryExpression";

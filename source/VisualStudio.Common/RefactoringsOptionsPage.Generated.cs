@@ -134,6 +134,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             ReplaceWhileStatementWithDoStatement = true;
             ReverseForLoop = true;
             SimplifyLambdaExpression = true;
+            SortSwitchSections = true;
             SplitAttributes = true;
             SplitVariableDeclaration = true;
             SwapExpressionsInBinaryExpression = true;
@@ -274,6 +275,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             SetIsEnabled(RefactoringIdentifiers.ReplaceWhileStatementWithDoStatement, ReplaceWhileStatementWithDoStatement);
             SetIsEnabled(RefactoringIdentifiers.ReverseForLoop, ReverseForLoop);
             SetIsEnabled(RefactoringIdentifiers.SimplifyLambdaExpression, SimplifyLambdaExpression);
+            SetIsEnabled(RefactoringIdentifiers.SortSwitchSections, SortSwitchSections);
             SetIsEnabled(RefactoringIdentifiers.SplitAttributes, SplitAttributes);
             SetIsEnabled(RefactoringIdentifiers.SplitVariableDeclaration, SplitVariableDeclaration);
             SetIsEnabled(RefactoringIdentifiers.SwapExpressionsInBinaryExpression, SwapExpressionsInBinaryExpression);
@@ -1505,6 +1507,16 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
         [Description("Syntax: lambda expression with block with single single-line statement\r\nScope: body")]
         [TypeConverter(typeof (EnabledDisabledConverter))]
         public bool SimplifyLambdaExpression
+        {
+            get;
+            set;
+        }
+
+        [Category(RefactoringCategory)]
+        [DisplayName("Sort switch sections")]
+        [Description("Syntax: switch statement\r\nScope: switch keyword")]
+        [TypeConverter(typeof (EnabledDisabledConverter))]
+        public bool SortSwitchSections
         {
             get;
             set;

@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Pihrtsoft.CodeAnalysis.CSharp.Analysis;
+using Pihrtsoft.CodeAnalysis.CSharp.Refactorings.SortSwitchSections;
 
 namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 {
@@ -63,6 +64,13 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                     context.RegisterRefactoring(
                         "Replace 'switch' with 'if-else'",
                         cancellationToken => ReplaceSwitchWithIfElseRefactoring.RefactorAsync(context.Document, switchStatement, cancellationToken));
+                }
+
+                if (context.IsRefactoringEnabled(RefactoringIdentifiers.SortSwitchSections))
+                {
+                    context.RegisterRefactoring(
+                        "Sort switch sections",
+                        cancellationToken => SortSwitchSectionsRefactoring.RefactorAsync(context.Document, switchStatement, cancellationToken));
                 }
             }
         }
