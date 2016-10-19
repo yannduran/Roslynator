@@ -862,5 +862,14 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
              defaultSeverity: DiagnosticSeverity.Info,
              isEnabledByDefault: true
          );
+
+        public static readonly DiagnosticDescriptor DefaultLabelShouldBeLastLabelInSwitchSection = new DiagnosticDescriptor(
+             id: DiagnosticIdentifiers.DefaultLabelShouldBeLastLabelInSwitchSection,
+             title: "Default label should be last label in switch section.",
+             messageFormat: "Consider moving default label to last position in switch section.",
+             category: DiagnosticCategories.General,
+             defaultSeverity: DiagnosticSeverity.Info,
+             isEnabledByDefault: true
+         );
     }
 }

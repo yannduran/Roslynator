@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.CodeAnalysis.Text;
 using Pihrtsoft.CodeAnalysis.CSharp.Analyzers;
 
 namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
@@ -22,7 +23,8 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
                     DiagnosticDescriptors.FormatSwitchSectionStatementOnSeparateLine,
                     DiagnosticDescriptors.FormatEachStatementOnSeparateLine,
                     DiagnosticDescriptors.RemoveRedundantDefaultSwitchSection,
-                    DiagnosticDescriptors.RemoveUnnecessaryCaseLabel);
+                    DiagnosticDescriptors.RemoveUnnecessaryCaseLabel,
+                    DiagnosticDescriptors.DefaultLabelShouldBeLastLabelInSwitchSection);
             }
         }
 
@@ -46,10 +48,13 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
             if (switchSection.Parent?.IsKind(SyntaxKind.SwitchStatement) == true)
             {
                 AnalyzeRedundantDefaultSwitchSection(context, switchSection);
+
                 AnalyzeUnnecessaryCaseLabel(context, switchSection);
             }
 
             AnalyzeFirstStatement(context, switchSection);
+
+            AnalyzeDefaultSection(context, switchSection);
         }
 
         private static void AnalyzeRedundantDefaultSwitchSection(SyntaxNodeAnalysisContext context, SwitchSectionSyntax switchSection)
@@ -131,6 +136,28 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
                 context.ReportDiagnostic(
                     DiagnosticDescriptors.FormatSwitchSectionStatementOnSeparateLine,
                     statements[0].GetLocation());
+            }
+        }
+
+        private void AnalyzeDefaultSection(SyntaxNodeAnalysisContext context, SwitchSectionSyntax switchSection)
+        {
+            SyntaxList<SwitchLabelSyntax> labels = switchSection.Labels;
+
+            for (int i = 0; i < labels.Count - 1; i++)
+            {
+                SwitchLabelSyntax label = labels[i];
+
+                if (label.IsKind(SyntaxKind.DefaultSwitchLabel))
+                {
+                    TextSpan span = TextSpan.FromBounds(label.Span.End, labels.Last().Span.Start);
+
+                    if (!switchSection.ContainsDirectives(span))
+                    {
+                        context.ReportDiagnostic(
+                            DiagnosticDescriptors.DefaultLabelShouldBeLastLabelInSwitchSection,
+                            label.GetLocation());
+                    }
+                }
             }
         }
     }
