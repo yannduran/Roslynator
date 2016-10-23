@@ -229,6 +229,7 @@
     <Compile Include="Refactorings\MemberDeclarationsRefactoring.cs" />
     <Compile Include="Refactorings\ReplaceMethodWithProperty\ReplaceMethodWithPropertySyntaxRewriter.cs" />
     <Compile Include="Refactorings\RemoveInterpolationRefactoring.cs" />
+    <Compile Include="Refactorings\ReplaceExpressionWithConstantValueRefactoring.cs" />
     <Compile Include="StringLiteralChain.cs" />
     <Compile Include="SyntaxHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

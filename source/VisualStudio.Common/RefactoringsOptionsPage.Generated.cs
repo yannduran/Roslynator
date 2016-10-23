@@ -119,6 +119,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             ReplaceCountWithLengthOrLengthWithCount = true;
             ReplaceDoStatementWithWhileStatement = true;
             ReplaceEmptyStringLiteralWithStringEmpty = true;
+            ReplaceExpressionWithConstantValue = true;
             ReplaceFieldWithConstant = true;
             ReplaceForEachWithFor = true;
             ReplaceForWithForEach = true;
@@ -264,6 +265,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             SetIsEnabled(RefactoringIdentifiers.ReplaceCountWithLengthOrLengthWithCount, ReplaceCountWithLengthOrLengthWithCount);
             SetIsEnabled(RefactoringIdentifiers.ReplaceDoStatementWithWhileStatement, ReplaceDoStatementWithWhileStatement);
             SetIsEnabled(RefactoringIdentifiers.ReplaceEmptyStringLiteralWithStringEmpty, ReplaceEmptyStringLiteralWithStringEmpty);
+            SetIsEnabled(RefactoringIdentifiers.ReplaceExpressionWithConstantValue, ReplaceExpressionWithConstantValue);
             SetIsEnabled(RefactoringIdentifiers.ReplaceFieldWithConstant, ReplaceFieldWithConstant);
             SetIsEnabled(RefactoringIdentifiers.ReplaceForEachWithFor, ReplaceForEachWithFor);
             SetIsEnabled(RefactoringIdentifiers.ReplaceForWithForEach, ReplaceForWithForEach);
@@ -1365,6 +1367,16 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
         [Description("Syntax: empty string literal")]
         [TypeConverter(typeof (EnabledDisabledConverter))]
         public bool ReplaceEmptyStringLiteralWithStringEmpty
+        {
+            get;
+            set;
+        }
+
+        [Category(RefactoringCategory)]
+        [DisplayName("Replace expression with constant value")]
+        [Description("Syntax: expression that has constant value")]
+        [TypeConverter(typeof (EnabledDisabledConverter))]
+        public bool ReplaceExpressionWithConstantValue
         {
             get;
             set;

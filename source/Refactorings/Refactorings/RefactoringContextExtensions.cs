@@ -253,7 +253,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                     {
                         if (!fExpression)
                         {
-                            ExpressionRefactoring.ComputeRefactorings(context, expression);
+                            await ExpressionRefactoring.ComputeRefactorings(context, expression);
                             fExpression = true;
                         }
 

@@ -113,6 +113,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
         public const string ReplaceCountWithLengthOrLengthWithCount = "ReplaceCountWithLengthOrLengthWithCount";
         public const string ReplaceDoStatementWithWhileStatement = "ReplaceDoStatementWithWhileStatement";
         public const string ReplaceEmptyStringLiteralWithStringEmpty = "ReplaceEmptyStringLiteralWithStringEmpty";
+        public const string ReplaceExpressionWithConstantValue = "ReplaceExpressionWithConstantValue";
         public const string ReplaceFieldWithConstant = "ReplaceFieldWithConstant";
         public const string ReplaceForEachWithFor = "ReplaceForEachWithFor";
         public const string ReplaceForWithForEach = "ReplaceForWithForEach";

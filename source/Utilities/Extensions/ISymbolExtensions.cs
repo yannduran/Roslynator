@@ -9,6 +9,43 @@ namespace Pihrtsoft.CodeAnalysis
 {
     public static class ISymbolExtensions
     {
+        public static bool TryGetConstantValue(this ISymbol symbol, out object constantValue)
+        {
+            if (symbol == null)
+                throw new ArgumentNullException(nameof(symbol));
+
+            switch (symbol.Kind)
+            {
+                case SymbolKind.Field:
+                    {
+                        var field = (IFieldSymbol)symbol;
+
+                        if (field.HasConstantValue)
+                        {
+                            constantValue = field.ConstantValue;
+                            return true;
+                        }
+
+                        break;
+                    }
+                case SymbolKind.Local:
+                    {
+                        var local = (ILocalSymbol)symbol;
+
+                        if (local.HasConstantValue)
+                        {
+                            constantValue = local.ConstantValue;
+                            return true;
+                        }
+
+                        break;
+                    }
+            }
+
+            constantValue = null;
+            return false;
+        }
+
         public static bool IsKind(this ISymbol symbol, SymbolKind kind)
         {
             return symbol?.Kind == kind;

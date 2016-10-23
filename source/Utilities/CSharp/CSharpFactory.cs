@@ -378,6 +378,55 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
                 Literal(value));
         }
 
+        public static LiteralExpressionSyntax NumericLiteralExpression(uint value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(sbyte value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(decimal value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(double value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(float value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(long value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(ulong value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
         public static LiteralExpressionSyntax ZeroLiteralExpression()
         {
             return NumericLiteralExpression(0);

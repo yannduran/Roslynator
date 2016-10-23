@@ -592,5 +592,74 @@ namespace Pihrtsoft.CodeAnalysis
 
             return null;
         }
+
+        public static ExpressionSyntax CreateExpressionFromConstantValue(object constantValue)
+        {
+            if (constantValue == null)
+            {
+                return NullLiteralExpression();
+            }
+            else if (constantValue is bool)
+            {
+                if ((bool)constantValue)
+                {
+                    return TrueLiteralExpression();
+                }
+                else
+                {
+                    return FalseLiteralExpression();
+                }
+            }
+            else if (constantValue is char)
+            {
+                return CharacterLiteralExpression((char)constantValue);
+            }
+            else if (constantValue is sbyte)
+            {
+                return NumericLiteralExpression((sbyte)constantValue);
+            }
+            else if (constantValue is byte)
+            {
+                NumericLiteralExpression((byte)constantValue);
+            }
+            else if (constantValue is short)
+            {
+                return NumericLiteralExpression((short)constantValue);
+            }
+            else if (constantValue is ushort)
+            {
+                return NumericLiteralExpression((ushort)constantValue);
+            }
+            else if (constantValue is int)
+            {
+                return NumericLiteralExpression((int)constantValue);
+            }
+            else if (constantValue is uint)
+            {
+                return NumericLiteralExpression((uint)constantValue);
+            }
+            else if (constantValue is long)
+            {
+                return NumericLiteralExpression((long)constantValue);
+            }
+            else if (constantValue is ulong)
+            {
+                return NumericLiteralExpression((ulong)constantValue);
+            }
+            else if (constantValue is decimal)
+            {
+                return NumericLiteralExpression((decimal)constantValue);
+            }
+            else if (constantValue is float)
+            {
+                return NumericLiteralExpression((float)constantValue);
+            }
+            else if (constantValue is double)
+            {
+                return NumericLiteralExpression((double)constantValue);
+            }
+
+            return StringLiteralExpression(constantValue.ToString());
+        }
     }
 }
