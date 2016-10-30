@@ -871,5 +871,14 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
              defaultSeverity: DiagnosticSeverity.Info,
              isEnabledByDefault: true
          );
+
+        public static readonly DiagnosticDescriptor DeclareTypeInsideNamespace = new DiagnosticDescriptor(
+             id: DiagnosticIdentifiers.DeclareTypeInsideNamespace,
+             title: "Declare type inside namespace.",
+             messageFormat: "Consider declaring '{0}' inside namespace.",
+             category: DiagnosticCategories.General,
+             defaultSeverity: DiagnosticSeverity.Warning,
+             isEnabledByDefault: true
+         );
     }
 }

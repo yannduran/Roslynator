@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -15,7 +16,12 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
         {
-            get { return ImmutableArray.Create(DiagnosticDescriptors.RemovePartialModifierFromTypeWithSinglePart); }
+            get
+            {
+                return ImmutableArray.Create(
+                    DiagnosticDescriptors.RemovePartialModifierFromTypeWithSinglePart,
+                    DiagnosticDescriptors.DeclareTypeInsideNamespace);
+            }
         }
 
         public override void Initialize(AnalysisContext context)
@@ -39,11 +45,11 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
                 || kind == TypeKind.Struct
                 || kind == TypeKind.Interface)
             {
-                ImmutableArray<SyntaxReference> syntaxReference = symbol.DeclaringSyntaxReferences;
+                ImmutableArray<SyntaxReference> syntaxReferences = symbol.DeclaringSyntaxReferences;
 
-                if (syntaxReference.Length == 1)
+                if (syntaxReferences.Length == 1)
                 {
-                    var declaration = syntaxReference[0].GetSyntax(context.CancellationToken) as MemberDeclarationSyntax;
+                    var declaration = syntaxReferences[0].GetSyntax(context.CancellationToken) as MemberDeclarationSyntax;
 
                     if (declaration != null)
                     {
@@ -58,6 +64,51 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
                         }
                     }
                 }
+            }
+
+            if (symbol.ContainingNamespace?.IsGlobalNamespace == true)
+            {
+                ImmutableArray<SyntaxReference> syntaxReferences = symbol.DeclaringSyntaxReferences;
+
+                foreach (SyntaxReference syntaxReference in syntaxReferences)
+                {
+                    SyntaxNode node = syntaxReference.GetSyntax(context.CancellationToken);
+
+                    if (node != null)
+                    {
+                        SyntaxToken identifier = GetDeclarationIdentifier(kind, node);
+
+                        if (!identifier.IsKind(SyntaxKind.None))
+                        {
+                            context.ReportDiagnostic(
+                                DiagnosticDescriptors.DeclareTypeInsideNamespace,
+                                identifier.GetLocation(),
+                                identifier.ValueText);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static SyntaxToken GetDeclarationIdentifier(TypeKind kind, SyntaxNode node)
+        {
+            switch (kind)
+            {
+                case TypeKind.Class:
+                    return ((ClassDeclarationSyntax)node).Identifier;
+                case TypeKind.Struct:
+                    return ((StructDeclarationSyntax)node).Identifier;
+                case TypeKind.Interface:
+                    return ((InterfaceDeclarationSyntax)node).Identifier;
+                case TypeKind.Delegate:
+                    return ((DelegateDeclarationSyntax)node).Identifier;
+                case TypeKind.Enum:
+                    return ((EnumDeclarationSyntax)node).Identifier;
+                default:
+                    {
+                        Debug.Assert(false, kind.ToString());
+                        return default(SyntaxToken);
+                    }
             }
         }
     }
