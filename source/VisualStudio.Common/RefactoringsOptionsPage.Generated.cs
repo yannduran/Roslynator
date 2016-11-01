@@ -33,6 +33,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             ChangeMethodReturnTypeToVoid = true;
             ChangeTypeAccordingToExpression = true;
             ChangeVarToExplicitType = true;
+            CheckExpressionForNull = true;
             CheckParameterForNull = true;
             CollapseToInitializer = true;
             CommentOutMember = true;
@@ -183,6 +184,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             SetIsEnabled(RefactoringIdentifiers.ChangeMethodReturnTypeToVoid, ChangeMethodReturnTypeToVoid);
             SetIsEnabled(RefactoringIdentifiers.ChangeTypeAccordingToExpression, ChangeTypeAccordingToExpression);
             SetIsEnabled(RefactoringIdentifiers.ChangeVarToExplicitType, ChangeVarToExplicitType);
+            SetIsEnabled(RefactoringIdentifiers.CheckExpressionForNull, CheckExpressionForNull);
             SetIsEnabled(RefactoringIdentifiers.CheckParameterForNull, CheckParameterForNull);
             SetIsEnabled(RefactoringIdentifiers.CollapseToInitializer, CollapseToInitializer);
             SetIsEnabled(RefactoringIdentifiers.CommentOutMember, CommentOutMember);
@@ -515,6 +517,16 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
         [Description("Syntax: variable declaration, foreach statetement\r\nScope: type")]
         [TypeConverter(typeof (EnabledDisabledConverter))]
         public bool ChangeVarToExplicitType
+        {
+            get;
+            set;
+        }
+
+        [Category(RefactoringCategory)]
+        [DisplayName("Check expression for null")]
+        [Description("Syntax: local declaration (identifier), assignment expression (left)")]
+        [TypeConverter(typeof (EnabledDisabledConverter))]
+        public bool CheckExpressionForNull
         {
             get;
             set;

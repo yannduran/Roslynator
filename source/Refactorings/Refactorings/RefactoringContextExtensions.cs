@@ -92,6 +92,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             bool fInterpolatedStringText = false;
             bool fElseClause = false;
             bool fCaseSwitchLabel = false;
+            bool fVariableDeclarator = false;
 
             bool fExpression = false;
             bool fAnonymousMethod = false;
@@ -248,12 +249,20 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                         continue;
                     }
 
+                    if (!fVariableDeclarator
+                        && kind == SyntaxKind.VariableDeclarator)
+                    {
+                        await CheckExpressionForNullRefactoring.ComputeRefactoringAsync(context, (VariableDeclaratorSyntax)node).ConfigureAwait(false);
+                        fVariableDeclarator = true;
+                        continue;
+                    }
+
                     var expression = node as ExpressionSyntax;
                     if (expression != null)
                     {
                         if (!fExpression)
                         {
-                            ExpressionRefactoring.ComputeRefactorings(context, expression);
+                            await ExpressionRefactoring.ComputeRefactoringsAsync(context, expression).ConfigureAwait(false);
                             fExpression = true;
                         }
 

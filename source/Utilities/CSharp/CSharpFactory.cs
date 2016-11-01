@@ -386,6 +386,16 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
             return Token(SyntaxKind.VirtualKeyword);
         }
 
+        public static SyntaxToken OpenBraceToken()
+        {
+            return Token(SyntaxKind.OpenBraceToken);
+        }
+
+        public static SyntaxToken CloseBraceToken()
+        {
+            return Token(SyntaxKind.CloseBraceToken);
+        }
+
         public static IdentifierNameSyntax Var()
         {
             return IdentifierName("var");
