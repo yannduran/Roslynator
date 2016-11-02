@@ -132,6 +132,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
         public const string ReplacePrefixOperatorWithPostfixOperator = "ReplacePrefixOperatorWithPostfixOperator";
         public const string ReplacePropertyWithMethod = "ReplacePropertyWithMethod";
         public const string ReplaceRegularStringLiteralWithVerbatimStringLiteral = "ReplaceRegularStringLiteralWithVerbatimStringLiteral";
+        public const string ReplaceStringContainsWithStringIndexOf = "ReplaceStringContainsWithStringIndexOf";
         public const string ReplaceStringEmptyWithEmptyStringLiteral = "ReplaceStringEmptyWithEmptyStringLiteral";
         public const string ReplaceStringFormatWithInterpolatedString = "ReplaceStringFormatWithInterpolatedString";
         public const string ReplaceStringLiteralWithCharacterLiteral = "ReplaceStringLiteralWithCharacterLiteral";

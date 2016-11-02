@@ -138,6 +138,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             ReplacePrefixOperatorWithPostfixOperator = true;
             ReplacePropertyWithMethod = true;
             ReplaceRegularStringLiteralWithVerbatimStringLiteral = true;
+            ReplaceStringContainsWithStringIndexOf = true;
             ReplaceStringEmptyWithEmptyStringLiteral = true;
             ReplaceStringFormatWithInterpolatedString = true;
             ReplaceStringLiteralWithCharacterLiteral = true;
@@ -290,6 +291,7 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
             SetIsEnabled(RefactoringIdentifiers.ReplacePrefixOperatorWithPostfixOperator, ReplacePrefixOperatorWithPostfixOperator);
             SetIsEnabled(RefactoringIdentifiers.ReplacePropertyWithMethod, ReplacePropertyWithMethod);
             SetIsEnabled(RefactoringIdentifiers.ReplaceRegularStringLiteralWithVerbatimStringLiteral, ReplaceRegularStringLiteralWithVerbatimStringLiteral);
+            SetIsEnabled(RefactoringIdentifiers.ReplaceStringContainsWithStringIndexOf, ReplaceStringContainsWithStringIndexOf);
             SetIsEnabled(RefactoringIdentifiers.ReplaceStringEmptyWithEmptyStringLiteral, ReplaceStringEmptyWithEmptyStringLiteral);
             SetIsEnabled(RefactoringIdentifiers.ReplaceStringFormatWithInterpolatedString, ReplaceStringFormatWithInterpolatedString);
             SetIsEnabled(RefactoringIdentifiers.ReplaceStringLiteralWithCharacterLiteral, ReplaceStringLiteralWithCharacterLiteral);
@@ -1569,6 +1571,16 @@ namespace Pihrtsoft.CodeAnalysis.VisualStudio
         [Description("Syntax: regular string literal")]
         [TypeConverter(typeof (EnabledDisabledConverter))]
         public bool ReplaceRegularStringLiteralWithVerbatimStringLiteral
+        {
+            get;
+            set;
+        }
+
+        [Category(RefactoringCategory)]
+        [DisplayName("Replace string.Contains with string.IndexOf")]
+        [Description("Syntax: method invocation")]
+        [TypeConverter(typeof (EnabledDisabledConverter))]
+        public bool ReplaceStringContainsWithStringIndexOf
         {
             get;
             set;

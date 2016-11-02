@@ -15,6 +15,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             if (context.IsAnyRefactoringEnabled(
                     RefactoringIdentifiers.ReplaceMethodInvocationWithElementAccess,
                     RefactoringIdentifiers.ReplaceAnyWithAllOrAllWithAny,
+                    RefactoringIdentifiers.ReplaceStringContainsWithStringIndexOf,
                     RefactoringIdentifiers.AddConfigureAwait)
                 && invocationExpression.Expression != null
                 && invocationExpression.ArgumentList != null
@@ -30,6 +31,9 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 
                     if (context.IsRefactoringEnabled(RefactoringIdentifiers.ReplaceAnyWithAllOrAllWithAny))
                         await ReplaceAnyWithAllOrAllWithAnyRefactoring.ComputeRefactoringAsync(context, invocationExpression).ConfigureAwait(false);
+
+                    if (context.IsRefactoringEnabled(RefactoringIdentifiers.ReplaceStringContainsWithStringIndexOf))
+                        await ReplaceStringContainsWithStringIndexOf.ComputeRefactoringAsync(context, invocationExpression).ConfigureAwait(false);
                 }
             }
 
