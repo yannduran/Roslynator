@@ -143,9 +143,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             string methodName,
             SemanticModel semanticModel)
         {
-            var methodSymbol = semanticModel
-                .GetSymbolInfo(invocation)
-                .Symbol as IMethodSymbol;
+            IMethodSymbol methodSymbol = semanticModel.GetMethodSymbol(invocation);
 
             if (methodSymbol?.ReducedFrom != null)
             {
@@ -165,9 +163,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             string methodName,
             SemanticModel semanticModel)
         {
-            var methodSymbol = semanticModel
-                .GetSymbolInfo(invocation)
-                .Symbol as IMethodSymbol;
+            IMethodSymbol methodSymbol = semanticModel.GetMethodSymbol(invocation);
 
             if (methodSymbol?.ReducedFrom != null)
             {
@@ -186,7 +182,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             InvocationExpressionSyntax invocation,
             SemanticModel semanticModel)
         {
-            var methodSymbol = semanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
+            IMethodSymbol methodSymbol = semanticModel.GetMethodSymbol(invocation);
 
             if (methodSymbol?.ReducedFrom != null)
             {
@@ -206,9 +202,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             InvocationExpressionSyntax invocation,
             SemanticModel semanticModel)
         {
-            var methodSymbol = semanticModel
-                .GetSymbolInfo(invocation)
-                .Symbol as IMethodSymbol;
+            IMethodSymbol methodSymbol = semanticModel.GetMethodSymbol(invocation);
 
             if (methodSymbol?.ReducedFrom != null)
             {

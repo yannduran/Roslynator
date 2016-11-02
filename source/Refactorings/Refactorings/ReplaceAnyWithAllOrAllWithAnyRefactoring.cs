@@ -15,7 +15,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
         {
             SemanticModel semanticModel = await context.GetSemanticModelAsync().ConfigureAwait(false);
 
-            var methodSymbol = semanticModel.GetSymbolInfo(invocationExpression, context.CancellationToken).Symbol as IMethodSymbol;
+            IMethodSymbol methodSymbol = semanticModel.GetMethodSymbol(invocationExpression, context.CancellationToken);
 
             if (methodSymbol == null)
                 return;

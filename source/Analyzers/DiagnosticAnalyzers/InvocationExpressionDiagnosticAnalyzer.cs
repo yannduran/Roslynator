@@ -271,9 +271,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
 
         private static bool IsEnumerableWhereMethod(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocation)
         {
-            var methodSymbol = context.SemanticModel
-                .GetSymbolInfo(invocation, context.CancellationToken)
-                .Symbol as IMethodSymbol;
+            IMethodSymbol methodSymbol = context.SemanticModel.GetMethodSymbol(invocation, context.CancellationToken);
 
             if (methodSymbol?.ReducedFrom != null)
             {
@@ -291,9 +289,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
 
         private static bool IsImmutableArrayWhereMethod(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocation)
         {
-            var methodSymbol = context.SemanticModel
-                .GetSymbolInfo(invocation, context.CancellationToken)
-                .Symbol as IMethodSymbol;
+            IMethodSymbol methodSymbol = context.SemanticModel.GetMethodSymbol(invocation, context.CancellationToken);
 
             if (methodSymbol?.ReducedFrom != null)
             {
@@ -315,7 +311,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
             string methodName,
             int parameterCount = 1)
         {
-            var methodSymbol = context.SemanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
+            IMethodSymbol methodSymbol = context.SemanticModel.GetMethodSymbol(invocation);
 
             if (methodSymbol?.ReducedFrom != null)
             {

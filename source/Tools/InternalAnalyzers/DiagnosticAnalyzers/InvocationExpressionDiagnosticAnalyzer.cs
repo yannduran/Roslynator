@@ -114,7 +114,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Internal.DiagnosticAnalyzers
                 if (newExtensionsClassSymbol != null
                     && NewExtensionMethodExists(elementName, typeSymbol, newExtensionsClassSymbol))
                 {
-                    var methodSymbol = semanticModel.GetSymbolInfo(methodName, cancellationToken).Symbol as IMethodSymbol;
+                    IMethodSymbol methodSymbol = semanticModel.GetMethodSymbol(methodName, cancellationToken);
 
                     if (methodSymbol != null
                         && methodSymbol.MethodKind == MethodKind.ReducedExtension
