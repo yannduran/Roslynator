@@ -880,5 +880,14 @@ namespace Roslynator.CSharp
              defaultSeverity: DiagnosticSeverity.Info,
              isEnabledByDefault: false
          );
+
+        public static readonly DiagnosticDescriptor AddBracesToSwitchSectionWithMultipleStatements = new DiagnosticDescriptor(
+             id: DiagnosticIdentifiers.AddBracesToSwitchSectionWithMultipleStatements,
+             title: "Add braces to switch section with multiple statements.",
+             messageFormat: "Consider adding braces to switch section with multiple statements.",
+             category: DiagnosticCategories.General,
+             defaultSeverity: DiagnosticSeverity.Info,
+             isEnabledByDefault: false
+         );
     }
 }

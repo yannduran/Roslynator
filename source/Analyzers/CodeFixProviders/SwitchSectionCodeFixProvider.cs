@@ -2,6 +2,7 @@
 
 using System.Collections.Immutable;
 using System.Composition;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Roslynator.CSharp.Refactorings;
 
 namespace Roslynator.CSharp.CodeFixProviders
 {
@@ -17,7 +19,14 @@ namespace Roslynator.CSharp.CodeFixProviders
     public class SwitchSectionCodeFixProvider : BaseCodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(DiagnosticIdentifiers.RemoveRedundantDefaultSwitchSection);
+        {
+            get
+            {
+                return ImmutableArray.Create(
+                    DiagnosticIdentifiers.RemoveRedundantDefaultSwitchSection,
+                    DiagnosticIdentifiers.AddBracesToSwitchSectionWithMultipleStatements);
+            }
+        }
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -29,21 +38,49 @@ namespace Roslynator.CSharp.CodeFixProviders
                 .FindNode(context.Span, getInnermostNodeForTie: true)?
                 .FirstAncestorOrSelf<SwitchSectionSyntax>();
 
+            Debug.Assert(switchSection != null, $"{nameof(switchSection)} is null");
+
             if (switchSection == null)
                 return;
 
-            CodeAction codeAction = CodeAction.Create(
-                "Remove redundant switch section",
-                cancellationToken =>
+            foreach (Diagnostic diagnostic in context.Diagnostics)
+            {
+                switch (diagnostic.Id)
                 {
-                    return RemoveRedundantSwitchSectionAsync(
-                        context.Document,
-                        switchSection,
-                        cancellationToken);
-                },
-                DiagnosticIdentifiers.RemoveRedundantDefaultSwitchSection + EquivalenceKeySuffix);
+                    case DiagnosticIdentifiers.RemoveRedundantDefaultSwitchSection:
+                        {
+                            CodeAction codeAction = CodeAction.Create(
+                                "Remove redundant switch section",
+                                cancellationToken =>
+                                {
+                                    return RemoveRedundantSwitchSectionAsync(
+                                        context.Document,
+                                        switchSection,
+                                        cancellationToken);
+                                },
+                                diagnostic.Id + EquivalenceKeySuffix);
 
-            context.RegisterCodeFix(codeAction, context.Diagnostics);
+                            context.RegisterCodeFix(codeAction, diagnostic);
+                            break;
+                        }
+                    case DiagnosticIdentifiers.AddBracesToSwitchSectionWithMultipleStatements:
+                        {
+                            CodeAction codeAction = CodeAction.Create(
+                                AddBracesToSwitchSectionRefactoring.Title,
+                                cancellationToken =>
+                                {
+                                    return AddBracesToSwitchSectionRefactoring.RefactorAsync(
+                                        context.Document,
+                                        switchSection,
+                                        cancellationToken);
+                                },
+                                diagnostic.Id + EquivalenceKeySuffix);
+
+                            context.RegisterCodeFix(codeAction, diagnostic);
+                            break;
+                        }
+                }
+            }
         }
 
         private static async Task<Document> RemoveRedundantSwitchSectionAsync(
