@@ -729,5 +729,10 @@ namespace Roslynator.CSharp
                 SingletonList<SwitchLabelSyntax>(DefaultSwitchLabel()),
                 statements);
         }
+
+        public static ArrayRankSpecifierSyntax ArrayRankSpecifier(ExpressionSyntax size)
+        {
+            return SyntaxFactory.ArrayRankSpecifier(SingletonSeparatedList(size));
+        }
     }
 }

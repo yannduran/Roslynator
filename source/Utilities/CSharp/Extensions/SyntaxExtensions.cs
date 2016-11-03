@@ -124,6 +124,25 @@ namespace Roslynator.CSharp
             return argument.WithNameColon(null);
         }
 
+        public static ArrayCreationExpressionSyntax WithoutInitializer(this ArrayCreationExpressionSyntax arrayCreationExpression)
+        {
+            if (arrayCreationExpression == null)
+                throw new ArgumentNullException(nameof(arrayCreationExpression));
+
+            return arrayCreationExpression.WithInitializer(default(InitializerExpressionSyntax));
+        }
+
+        public static ArrayTypeSyntax WithRankSpecifiers(this ArrayTypeSyntax arrayType, ArrayRankSpecifierSyntax arrayRankSpecifier)
+        {
+            if (arrayType == null)
+                throw new ArgumentNullException(nameof(arrayType));
+
+            if (arrayRankSpecifier == null)
+                throw new ArgumentNullException(nameof(arrayRankSpecifier));
+
+            return arrayType.WithRankSpecifiers(SingletonList(arrayRankSpecifier));
+        }
+
         public static IParameterSymbol DetermineParameter(
             this AttributeArgumentSyntax argument,
             SemanticModel semanticModel,

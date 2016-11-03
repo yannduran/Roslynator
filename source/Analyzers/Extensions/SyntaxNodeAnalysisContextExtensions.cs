@@ -31,5 +31,11 @@ namespace Roslynator.CSharp
             FadeOutToken(context, descriptor, accessorList.OpenBraceToken);
             FadeOutToken(context, descriptor, accessorList.CloseBraceToken);
         }
+
+        public static void FadeOutBraces(this SyntaxNodeAnalysisContext context, DiagnosticDescriptor descriptor, InitializerExpressionSyntax initializerExpression)
+        {
+            FadeOutToken(context, descriptor, initializerExpression.OpenBraceToken);
+            FadeOutToken(context, descriptor, initializerExpression.CloseBraceToken);
+        }
     }
 }

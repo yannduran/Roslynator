@@ -880,5 +880,14 @@ namespace Roslynator.CSharp
              defaultSeverity: DiagnosticSeverity.Info,
              isEnabledByDefault: false
          );
+
+        public static readonly DiagnosticDescriptor SimplifyArrayCreationExpression = new DiagnosticDescriptor(
+             id: DiagnosticIdentifiers.SimplifyArrayCreationExpression,
+             title: "Simplify array creation expression.",
+             messageFormat: "Consider simplifying array creation expression.",
+             category: DiagnosticCategories.General,
+             defaultSeverity: DiagnosticSeverity.Info,
+             isEnabledByDefault: false
+         );
     }
 }
