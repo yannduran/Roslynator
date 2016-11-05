@@ -880,5 +880,14 @@ namespace Roslynator.CSharp
              defaultSeverity: DiagnosticSeverity.Info,
              isEnabledByDefault: false
          );
+
+        public static readonly DiagnosticDescriptor AddEmptyLineAfterBlock = new DiagnosticDescriptor(
+             id: DiagnosticIdentifiers.AddEmptyLineAfterBlock,
+             title: "Add empty line after block.",
+             messageFormat: "Consider adding empty line after block.",
+             category: DiagnosticCategories.General,
+             defaultSeverity: DiagnosticSeverity.Info,
+             isEnabledByDefault: false
+         );
     }
 }
