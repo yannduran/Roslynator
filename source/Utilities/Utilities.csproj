@@ -83,6 +83,7 @@
     <Compile Include="Extensions\DiagnosticsExtensions.cs" />
     <Compile Include="Extensions\FileLinePositionSpanExtensions.cs" />
     <Compile Include="Extensions\ISymbolExtensions.cs" />
+    <Compile Include="Extensions\SemanticModelExtensions.cs" />
     <Compile Include="Extensions\TextSpanExtensions.cs" />
     <Compile Include="ModifierUtility.cs" />
     <Compile Include="CSharp\Modifiers.cs" />

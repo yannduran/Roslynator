@@ -27,6 +27,7 @@ namespace Roslynator.VisualStudio
             AddToMethodInvocation = true;
             AddUsingDirective = true;
             AddUsingStaticDirective = true;
+            CallExtensionMethodAsInstanceMethod = true;
             ChangeExplicitTypeToVar = true;
             ChangeMemberTypeAccordingToReturnExpression = true;
             ChangeMemberTypeAccordingToYieldReturnExpression = true;
@@ -182,6 +183,7 @@ namespace Roslynator.VisualStudio
             SetIsEnabled(RefactoringIdentifiers.AddToMethodInvocation, AddToMethodInvocation);
             SetIsEnabled(RefactoringIdentifiers.AddUsingDirective, AddUsingDirective);
             SetIsEnabled(RefactoringIdentifiers.AddUsingStaticDirective, AddUsingStaticDirective);
+            SetIsEnabled(RefactoringIdentifiers.CallExtensionMethodAsInstanceMethod, CallExtensionMethodAsInstanceMethod);
             SetIsEnabled(RefactoringIdentifiers.ChangeExplicitTypeToVar, ChangeExplicitTypeToVar);
             SetIsEnabled(RefactoringIdentifiers.ChangeMemberTypeAccordingToReturnExpression, ChangeMemberTypeAccordingToReturnExpression);
             SetIsEnabled(RefactoringIdentifiers.ChangeMemberTypeAccordingToYieldReturnExpression, ChangeMemberTypeAccordingToYieldReturnExpression);
@@ -465,6 +467,16 @@ namespace Roslynator.VisualStudio
         [Description("Syntax: member access expression (public or internal static class)\r\nScope: selected class name")]
         [TypeConverter(typeof (EnabledDisabledConverter))]
         public bool AddUsingStaticDirective
+        {
+            get;
+            set;
+        }
+
+        [Category(RefactoringCategory)]
+        [DisplayName("Call extension method as instance method")]
+        [Description("Syntax: method invocation")]
+        [TypeConverter(typeof (EnabledDisabledConverter))]
+        public bool CallExtensionMethodAsInstanceMethod
         {
             get;
             set;

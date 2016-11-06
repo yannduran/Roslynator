@@ -81,6 +81,9 @@
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#add-using-static-directive">Add using static directive</a>
         </li>
         <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#call-extension-method-as-instance-method">Call extension method as instance method</a>
+        </li>
+        <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#change-explicit-type-to-var">Change explicit type to 'var'</a>
         </li>
         <li>

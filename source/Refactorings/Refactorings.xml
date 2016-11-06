@@ -104,6 +104,11 @@
     </Syntaxes>
     <Scope>selected class name</Scope>
   </Refactoring>
+  <Refactoring Id="CallExtensionMethodAsInstanceMethod" Title="Call extension method as instance method" ExtensionVersion="0.0.0">
+    <Syntaxes>
+      <Syntax>method invocation</Syntax>
+    </Syntaxes>
+  </Refactoring>
   <Refactoring Id="CollapseToInitializer" Title="Collapse to initalizer" ExtensionVersion="0.98.0">
     <Syntaxes>
       <Syntax>object creation followed with assignment(s)</Syntax>
