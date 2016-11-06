@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class ReturnStatementRefactoring
     {
@@ -16,7 +16,8 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                     if (context.IsAnyRefactoringEnabled(
                         RefactoringIdentifiers.AddBooleanComparison,
                         RefactoringIdentifiers.ChangeMemberTypeAccordingToReturnExpression,
-                        RefactoringIdentifiers.AddCastExpression))
+                        RefactoringIdentifiers.AddCastExpression,
+                        RefactoringIdentifiers.AddToMethodInvocation))
                     {
                         await ReturnExpressionRefactoring.ComputeRefactoringsAsync(context, returnStatement.Expression).ConfigureAwait(false);
                     }

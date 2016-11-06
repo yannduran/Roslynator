@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class ReplaceNullLiteralExpressionWithDefaultExpressionRefactoring
     {
@@ -29,7 +29,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                     if (typeSymbol?.SupportsExplicitDeclaration() == true)
                     {
                         context.RegisterRefactoring(
-                            $"Replace 'null' with 'default({typeSymbol.ToDisplayString(TypeSyntaxRefactoring.SymbolDisplayFormat)})'",
+                            $"Replace 'null' with 'default({typeSymbol.ToDisplayString(SyntaxUtility.DefaultSymbolDisplayFormat)})'",
                             cancellationToken =>
                             {
                                 return RefactorAsync(
@@ -51,7 +51,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
         {
             SyntaxNode root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-            TypeSyntax type = TypeSyntaxRefactoring.CreateTypeSyntax(typeSymbol)
+            TypeSyntax type = CSharpFactory.Type(typeSymbol)
                 .WithSimplifierAnnotation();
 
             DefaultExpressionSyntax defaultExpression = SyntaxFactory.DefaultExpression(type)

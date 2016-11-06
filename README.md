@@ -1,5 +1,5 @@
 ﻿## Roslynator
-* A collection of 80+ analyzers and 130+ refactorings for C#, powered by Roslyn.
+* A collection of 90+ analyzers and 150+ refactorings for C#, powered by Roslyn.
 * [Release Notes](http://github.com/JosefPihrt/Roslynator/blob/master/ChangeLog.md)
 
 ### Documentation
@@ -113,6 +113,10 @@
 * RCS1088 - Avoid usage of tab
 * RCS1089 - Use postfix unary operator instead of assignment
 * RCS1090 - Add 'ConfigureAwait(false)' to awaitable expression
+* RCS1091 - Remove empty region
+* RCS1092 - Add empty line after last statement in do statement
+* RCS1093 - Remove file with no code
+* RCS1094 - Declare using directive on top level
 
 ### List of Refactorings
 
@@ -128,6 +132,7 @@
 * [Add identifier to variable declaration](source/Refactorings/README.md#add-identifier-to-variable-declaration)
 * [Add parameter name to argument](source/Refactorings/README.md#add-parameter-name-to-argument)
 * [Add parameter name to parameter](source/Refactorings/README.md#add-parameter-name-to-parameter)
+* [Add 'To...' method invocation](source/Refactorings/README.md#add-to-method-invocation)
 * [Add using directive](source/Refactorings/README.md#add-using-directive)
 * [Add using static directive](source/Refactorings/README.md#add-using-static-directive)
 * [Change explicit type to 'var'](source/Refactorings/README.md#change-explicit-type-to-var)
@@ -165,6 +170,8 @@
 * [Format expression chain](source/Refactorings/README.md#format-expression-chain)
 * [Format initializer](source/Refactorings/README.md#format-initializer)
 * [Format parameter list](source/Refactorings/README.md#format-parameter-list)
+* [Generate base constructors](source/Refactorings/README.md#generate-base-constructors)
+* [Generate 'OnEvent' method](source/Refactorings/README.md#generate-onevent-method)
 * [Generate switch sections](source/Refactorings/README.md#generate-switch-sections)
 * [Initialize local with default value](source/Refactorings/README.md#initialize-local-with-default-value)
 * [Inline method](source/Refactorings/README.md#inline-method)
@@ -186,10 +193,12 @@
 * [Negate operator](source/Refactorings/README.md#negate-operator)
 * [Notify property changed](source/Refactorings/README.md#notify-property-changed)
 * [Parenthesize expression](source/Refactorings/README.md#parenthesize-expression)
+* [Promote local to parameter](source/Refactorings/README.md#promote-local-to-parameter)
 * [Remove all comments](source/Refactorings/README.md#remove-all-comments)
 * [Remove all comments (except documentation comments)](source/Refactorings/README.md#remove-all-comments-except-documentation-comments)
 * [Remove all documentation comments](source/Refactorings/README.md#remove-all-documentation-comments)
 * [Remove all member declarations](source/Refactorings/README.md#remove-all-member-declarations)
+* [Remove all preprocessor directives](source/Refactorings/README.md#remove-all-preprocessor-directives)
 * [Remove all region directives](source/Refactorings/README.md#remove-all-region-directives)
 * [Remove all statements](source/Refactorings/README.md#remove-all-statements)
 * [Remove all switch sections](source/Refactorings/README.md#remove-all-switch-sections)
@@ -201,13 +210,16 @@
 * [Remove condition from last else clause](source/Refactorings/README.md#remove-condition-from-last-else-clause)
 * [Remove directive and related directives](source/Refactorings/README.md#remove-directive-and-related-directives)
 * [Remove empty lines](source/Refactorings/README.md#remove-empty-lines)
+* [Remove interpolation](source/Refactorings/README.md#remove-interpolation)
 * [Remove member](source/Refactorings/README.md#remove-member)
 * [Remove member declarations above/below](source/Refactorings/README.md#remove-member-declarations-abovebelow)
 * [Remove parameter name from argument](source/Refactorings/README.md#remove-parameter-name-from-argument)
 * [Remove parentheses](source/Refactorings/README.md#remove-parentheses)
 * [Remove property initializer](source/Refactorings/README.md#remove-property-initializer)
+* [Remove region](source/Refactorings/README.md#remove-region)
 * [Remove statement](source/Refactorings/README.md#remove-statement)
 * [Remove statements from switch sections](source/Refactorings/README.md#remove-statements-from-switch-sections)
+* [Remove using alias directive](source/Refactorings/README.md#remove-using-alias-directive)
 * [Rename backing field according to property name](source/Refactorings/README.md#rename-backing-field-according-to-property-name)
 * [Rename identifier according to type name](source/Refactorings/README.md#rename-identifier-according-to-type-name)
 * [Rename method according to type name](source/Refactorings/README.md#rename-method-according-to-type-name)
@@ -216,17 +228,21 @@
 * [Replace "" with 'string.Empty'](source/Refactorings/README.md#replace--with-stringempty)
 * [Replace anonymous method with lambda expression](source/Refactorings/README.md#replace-anonymous-method-with-lambda-expression)
 * [Replace 'Any/All' with 'All/Any'](source/Refactorings/README.md#replace-anyall-with-allany)
+* [Replace as expression with cast expression](source/Refactorings/README.md#replace-as-expression-with-cast-expression)
 * [Replace conditional expression with expression](source/Refactorings/README.md#replace-conditional-expression-with-expression)
 * [Replace conditional expression with if-else](source/Refactorings/README.md#replace-conditional-expression-with-if-else)
 * [Replace constant with field](source/Refactorings/README.md#replace-constant-with-field)
 * [Replace 'Count/Length' with 'Length/Count'](source/Refactorings/README.md#replace-countlength-with-lengthcount)
 * [Replace do statement with while statement](source/Refactorings/README.md#replace-do-statement-with-while-statement)
+* [Replace equals expression with string.Equals](source/Refactorings/README.md#replace-equals-expression-with-stringequals)
 * [Replace field with constant](source/Refactorings/README.md#replace-field-with-constant)
 * [Replace for statement with foreach statement](source/Refactorings/README.md#replace-for-statement-with-foreach-statement)
 * [Replace foreach statement with for statement](source/Refactorings/README.md#replace-foreach-statement-with-for-statement)
 * [Replace 'HasFlag' with bitwise operation](source/Refactorings/README.md#replace-hasflag-with-bitwise-operation)
 * [Replace if-else with conditional expression](source/Refactorings/README.md#replace-if-else-with-conditional-expression)
+* [Replace if-else with switch statement](source/Refactorings/README.md#replace-if-else-with-switch-statement)
 * [Replace increment operator with decrement operator](source/Refactorings/README.md#replace-increment-operator-with-decrement-operator)
+* [Replace interpolated string with interpolation expression](source/Refactorings/README.md#replace-interpolated-string-with-interpolation-expression)
 * [Replace interpolated string with string literal](source/Refactorings/README.md#replace-interpolated-string-with-string-literal)
 * [Replace method invocation with '[]'](source/Refactorings/README.md#replace-method-invocation-with-)
 * [Replace method with property](source/Refactorings/README.md#replace-method-with-property)

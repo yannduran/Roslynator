@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class FormatArgumentListRefactoring
     {
@@ -55,7 +55,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 
         private static IEnumerable<SyntaxNodeOrToken> CreateMultilineNodesAndTokens(ArgumentListSyntax argumentList)
         {
-            SyntaxTriviaList trivia = SyntaxUtility.GetIndentTrivia(argumentList.Parent).Add(CSharpFactory.IndentTrivia);
+            SyntaxTriviaList trivia = SyntaxUtility.GetIndentTrivia(argumentList.Parent).Add(CSharpFactory.IndentTrivia());
 
             SeparatedSyntaxList<ArgumentSyntax>.Enumerator en = argumentList.Arguments.GetEnumerator();
 

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Josef Pihrt. All rights reserved. Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-namespace Pihrtsoft.CodeAnalysis.CSharp
+namespace Roslynator.CSharp
 {
     public static class DiagnosticIdentifiers
     {
@@ -96,5 +96,9 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
         public const string AvoidUsageOfTab = Prefix + "1088";
         public const string UsePostfixUnaryOperatorInsteadOfAssignment = Prefix + "1089";
         public const string AddConfigureAwait = Prefix + "1090";
+        public const string RemoveEmptyRegion = Prefix + "1091";
+        public const string AddEmptyLineAfterLastStatementInDoStatement = Prefix + "1092";
+        public const string RemoveFileWithNoCode = Prefix + "1093";
+        public const string DeclareUsingDirectiveOnTopLevel = Prefix + "1094";
     }
 }

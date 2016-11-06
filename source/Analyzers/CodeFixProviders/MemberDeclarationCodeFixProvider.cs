@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
+namespace Roslynator.CSharp.CodeFixProviders
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(MemberDeclarationCodeFixProvider))]
     [Shared]
@@ -65,7 +65,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
 
                         return classDeclaration
                             .WithOpenBraceToken(classDeclaration.OpenBraceToken.WithoutTrailingTrivia())
-                            .WithCloseBraceToken(classDeclaration.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLine));
+                            .WithCloseBraceToken(classDeclaration.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLineTrivia()));
                     }
                 case SyntaxKind.StructDeclaration:
                     {
@@ -73,7 +73,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
 
                         return structDeclaration
                             .WithOpenBraceToken(structDeclaration.OpenBraceToken.WithoutTrailingTrivia())
-                            .WithCloseBraceToken(structDeclaration.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLine));
+                            .WithCloseBraceToken(structDeclaration.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLineTrivia()));
                     }
                 case SyntaxKind.InterfaceDeclaration:
                     {
@@ -81,7 +81,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
 
                         return interfaceDeclaration
                             .WithOpenBraceToken(interfaceDeclaration.OpenBraceToken.WithoutTrailingTrivia())
-                            .WithCloseBraceToken(interfaceDeclaration.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLine));
+                            .WithCloseBraceToken(interfaceDeclaration.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLineTrivia()));
                     }
             }
 

@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class MemberDeclarationRefactoring
     {
@@ -43,7 +43,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                                 {
                                     context.RegisterRefactoring(
                                         "Remove " + SyntaxHelper.GetSyntaxNodeTitle(member),
-                                        cancellationToken => MemberRemover.RemoveAsync(context.Document, member, cancellationToken));
+                                        cancellationToken => SyntaxRemover.RemoveMemberAsync(context.Document, member, cancellationToken));
                                 }
 
                                 if (context.IsRefactoringEnabled(RefactoringIdentifiers.DuplicateMember))
@@ -80,7 +80,13 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             {
                 case SyntaxKind.ClassDeclaration:
                     {
-                        ExtractTypeDeclarationToNewFileRefactoring.ComputeRefactorings(context, (ClassDeclarationSyntax)member);
+                        var classDeclaration = (ClassDeclarationSyntax)member;
+
+                        ExtractTypeDeclarationToNewFileRefactoring.ComputeRefactorings(context, classDeclaration);
+
+                        if (context.IsRefactoringEnabled(RefactoringIdentifiers.GenerateBaseConstructors))
+                            await GenerateBaseConstructorsRefactoring.ComputeRefactoringAsync(context, classDeclaration).ConfigureAwait(false);
+
                         break;
                     }
                 case SyntaxKind.StructDeclaration:
@@ -140,12 +146,12 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                     }
                 case SyntaxKind.EventDeclaration:
                     {
-                        ComputeRefactorings(context, (EventDeclarationSyntax)member);
+                        EventDeclarationRefactoring.ComputeRefactorings(context, (EventDeclarationSyntax)member);
                         break;
                     }
                 case SyntaxKind.EventFieldDeclaration:
                     {
-                        EventFieldDeclarationRefactoring.ComputeRefactorings(context, (EventFieldDeclarationSyntax)member);
+                        await EventFieldDeclarationRefactoring.ComputeRefactoringsAsync(context, (EventFieldDeclarationSyntax)member).ConfigureAwait(false);
                         break;
                     }
             }
@@ -188,20 +194,6 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                 context.RegisterRefactoring(
                     "Use expression-bodied member",
                     cancellationToken => UseExpressionBodiedMemberRefactoring.RefactorAsync(context.Document, operatorDeclaration, cancellationToken));
-            }
-        }
-
-        private static void ComputeRefactorings(RefactoringContext context, EventDeclarationSyntax eventDeclaration)
-        {
-            if (context.IsRefactoringEnabled(RefactoringIdentifiers.MarkMemberAsStatic)
-                && eventDeclaration.Span.Contains(context.Span)
-                && MarkMemberAsStaticRefactoring.CanRefactor(eventDeclaration))
-            {
-                context.RegisterRefactoring(
-                    "Mark event as static",
-                    cancellationToken => MarkMemberAsStaticRefactoring.RefactorAsync(context.Document, eventDeclaration, cancellationToken));
-
-                MarkAllMembersAsStaticRefactoring.RegisterRefactoring(context, (ClassDeclarationSyntax)eventDeclaration.Parent);
             }
         }
 

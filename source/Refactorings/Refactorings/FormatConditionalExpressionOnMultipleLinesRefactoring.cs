@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis;
+using Roslynator;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class FormatConditionalExpressionOnMultipleLinesRefactoring
     {
@@ -26,9 +26,9 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 
         private static ConditionalExpressionSyntax CreateMultilineConditionalExpression(ConditionalExpressionSyntax conditionalExpression)
         {
-            SyntaxTriviaList triviaList = SyntaxUtility.GetIndentTrivia(conditionalExpression.Parent).Add(CSharpFactory.IndentTrivia);
+            SyntaxTriviaList triviaList = SyntaxUtility.GetIndentTrivia(conditionalExpression.Parent).Add(CSharpFactory.IndentTrivia());
 
-            triviaList = triviaList.Insert(0, CSharpFactory.NewLine);
+            triviaList = triviaList.Insert(0, CSharpFactory.NewLineTrivia());
 
             ParenthesizedExpressionSyntax condition = null;
             if (conditionalExpression.Condition.IsKind(SyntaxKind.ParenthesizedExpression))
@@ -61,7 +61,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             return Token(
                 TriviaList(),
                 kind,
-                TriviaList(CSharpFactory.NewLine));
+                TriviaList(CSharpFactory.NewLineTrivia()));
         }
     }
 }

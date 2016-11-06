@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class BinaryExpressionRefactoring
     {
@@ -98,6 +98,15 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                             binaryExpression,
                             cancellationToken);
                     });
+            }
+
+            if (context.IsRefactoringEnabled(RefactoringIdentifiers.ReplaceAsWithCast))
+                ReplaceAsWithCastRefactoring.ComputeRefactoring(context, binaryExpression);
+
+            if (context.IsRefactoringEnabled(RefactoringIdentifiers.ReplaceEqualsExpressionWithStringEquals)
+                && context.Span.IsContainedInSpanOrBetweenSpans(binaryExpression.OperatorToken))
+            {
+                await ReplaceEqualsExpressionWithStringEqualsRefactoring.ComputeRefactoringAsync(context, binaryExpression).ConfigureAwait(false);
             }
         }
     }

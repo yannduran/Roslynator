@@ -85,6 +85,12 @@
 
 ![Add parameter name to parameter](../../images/refactorings/AddParameterNameToParameter.png)
 
+#### Add 'To...' method invocation
+
+* **Syntax**: argument, assignment expression, return statement, variable declaration
+
+![Add 'To...' method invocation](../../images/refactorings/AddToMethodInvocation.png)
+
 #### Add using directive
 
 * **Syntax**: qualified name
@@ -340,6 +346,20 @@
 
 ![Format parameter list](../../images/refactorings/FormatAllParametersOnSingleLine.png)
 
+#### Generate base constructors
+
+* **Syntax**: class declaration
+* **Scope**: identifier
+
+![Generate base constructors](../../images/refactorings/GenerateBaseConstructors.png)
+
+#### Generate 'OnEvent' method
+
+* **Syntax**: event
+* **Scope**: identifier
+
+![Generate 'OnEvent' method](../../images/refactorings/GenerateOnEventMethod.png)
+
 #### Generate switch sections
 
 * **Syntax**: switch statement (that is empty or contains only default section)
@@ -471,6 +491,12 @@
 
 ![Parenthesize expression](../../images/refactorings/ParenthesizeExpression.png)
 
+#### Promote local to parameter
+
+* **Syntax**: local declaration in method
+
+![Promote local to parameter](../../images/refactorings/PromoteLocalToParameter.png)
+
 #### Remove all comments
 
 * **Syntax**: singleline/multiline comment, singleline/multiline documentation documentation comment
@@ -495,6 +521,12 @@
 * **Scope**: opening or closing brace
 
 ![Remove all member declarations](../../images/refactorings/RemoveAllMemberDeclarations.png)
+
+#### Remove all preprocessor directives
+
+* **Syntax**: preprocessor directive
+
+![Remove all preprocessor directives](../../images/refactorings/RemoveAllPreprocessorDirectives.png)
 
 #### Remove all region directives
 
@@ -569,6 +601,13 @@
 
 ![Remove empty lines](../../images/refactorings/RemoveEmptyLines.png)
 
+#### Remove interpolation
+
+* **Syntax**: string interpolation
+* **Scope**: opening or closing brace
+
+![Remove interpolation](../../images/refactorings/RemoveInterpolation.png)
+
 #### Remove member
 
 * **Syntax**: method, constructor, property, indexer, operator, event, namespace, class, struct, interface
@@ -601,6 +640,12 @@
 
 ![Remove property initializer](../../images/refactorings/RemovePropertyInitializer.png)
 
+#### Remove region
+
+* **Syntax**: region directive
+
+![Remove region](../../images/refactorings/RemoveRegion.png)
+
 #### Remove statement
 
 * **Syntax**: do statement, fixed statement, for statement, foreach statement, checked statement, if statement, lock statement, switch statement, try statement, unchecked statement, unsafe statement, using statement, while statement
@@ -613,6 +658,13 @@
 * **Syntax**: selected switch sections
 
 ![Remove statements from switch sections](../../images/refactorings/RemoveStatementsFromSwitchSections.png)
+
+#### Remove using alias directive
+
+* **Syntax**: using alias directive
+* **Scope**: identifier
+
+![Remove using alias directive](../../images/refactorings/RemoveUsingAliasDirective.png)
 
 #### Rename backing field according to property name
 
@@ -668,6 +720,13 @@
 
 ![Replace 'Any/All' with 'All/Any'](../../images/refactorings/ReplaceAnyWithAllOrAllWithAny.png)
 
+#### Replace as expression with cast expression
+
+* **Syntax**: as expression
+* **Scope**: operator
+
+![Replace as expression with cast expression](../../images/refactorings/ReplaceAsWithCast.png)
+
 #### Replace conditional expression with expression
 
 * **Syntax**: conditional expression
@@ -701,6 +760,13 @@
 
 ![Replace do statement with while statement](../../images/refactorings/ReplaceDoStatementWithWhileStatement.png)
 
+#### Replace equals expression with string.Equals
+
+* **Syntax**: equals expression
+* **Scope**: operator
+
+![Replace equals expression with string.Equals](../../images/refactorings/ReplaceEqualsExpressionWithStringEquals.png)
+
 #### Replace field with constant
 
 * **Syntax**: read-only field
@@ -731,11 +797,24 @@
 
 ![Replace if-else with conditional expression](../../images/refactorings/ReplaceIfElseWithConditionalExpression.png)
 
+#### Replace if-else with switch statement
+
+* **Syntax**: if statement
+
+![Replace if-else with switch statement](../../images/refactorings/ReplaceIfElseWithSwitch.png)
+
 #### Replace increment operator with decrement operator
 
 * **Syntax**: prefix/postfix unary expression
 
 ![Replace increment operator with decrement operator](../../images/refactorings/ReplaceIncrementOperatorWithDecrementOperator.png)
+
+#### Replace interpolated string with interpolation expression
+
+* **Syntax**: interpolated string with single interpolation and no text
+* **Scope**: interpolation
+
+![Replace interpolated string with interpolation expression](../../images/refactorings/ReplaceInterpolatedStringWithInterpolationExpression.png)
 
 #### Replace interpolated string with string literal
 

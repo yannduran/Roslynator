@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class ExpandEventRefactoring
     {
@@ -44,7 +44,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                 }));
 
             accessorList = SyntaxRemover.RemoveWhitespaceOrEndOfLine(accessorList)
-                .WithCloseBraceToken(accessorList.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLine));
+                .WithCloseBraceToken(accessorList.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLineTrivia()));
 
             VariableDeclaratorSyntax declarator = eventDeclaration.Declaration.Variables[0];
 

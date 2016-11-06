@@ -9,9 +9,9 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis.CSharp.Refactorings;
+using Roslynator.CSharp.Refactorings;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
+namespace Roslynator.CSharp.CodeFixProviders
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ImplicitArrayCreationExpressionCodeFixProvider))]
     [Shared]
@@ -41,12 +41,12 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
 
                 if (typeSymbol?.ElementType?.IsErrorType() == false)
                 {
-                    var arrayType = TypeSyntaxRefactoring.CreateTypeSyntax(typeSymbol) as ArrayTypeSyntax;
+                    var arrayType = CSharpFactory.Type(typeSymbol) as ArrayTypeSyntax;
 
                     if (arrayType != null)
                     {
                         CodeAction codeAction = CodeAction.Create(
-                            $"Declare explicit type '{typeSymbol.ToDisplayString(TypeSyntaxRefactoring.SymbolDisplayFormat)}'",
+                            $"Declare explicit type '{typeSymbol.ToDisplayString(SyntaxUtility.DefaultSymbolDisplayFormat)}'",
                             cancellationToken => RefactorAsync(context.Document, expression, arrayType, cancellationToken),
                             DiagnosticIdentifiers.AvoidImplicitlyTypedArray + EquivalenceKeySuffix);
 

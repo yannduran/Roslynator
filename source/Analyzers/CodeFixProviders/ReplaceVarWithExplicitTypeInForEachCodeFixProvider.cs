@@ -9,9 +9,9 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis.CSharp.Refactorings;
+using Roslynator.CSharp.Refactorings;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
+namespace Roslynator.CSharp.CodeFixProviders
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ReplaceVarWithExplicitTypeInForEachCodeFixProvider))]
     [Shared]
@@ -40,7 +40,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
                 if (typeSymbol != null)
                 {
                     CodeAction codeAction = CodeAction.Create(
-                        $"Change type to '{typeSymbol.ToDisplayString(TypeSyntaxRefactoring.SymbolDisplayFormat)}'",
+                        $"Change type to '{typeSymbol.ToDisplayString(SyntaxUtility.DefaultSymbolDisplayFormat)}'",
                         cancellationToken => ChangeTypeAsync(context.Document, forEachStatement.Type, typeSymbol, cancellationToken),
                         DiagnosticIdentifiers.UseExplicitTypeInsteadOfVarInForEach + EquivalenceKeySuffix);
 
@@ -57,7 +57,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
         {
             SyntaxNode oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-            TypeSyntax newType = TypeSyntaxRefactoring.CreateTypeSyntax(typeSymbol)
+            TypeSyntax newType = CSharpFactory.Type(typeSymbol)
                 .WithTriviaFrom(type)
                 .WithSimplifierAnnotation();
 

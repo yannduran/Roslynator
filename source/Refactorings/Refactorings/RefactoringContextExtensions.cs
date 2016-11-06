@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class RefactoringContextExtensions
     {
@@ -92,6 +92,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             bool fInterpolatedStringText = false;
             bool fElseClause = false;
             bool fCaseSwitchLabel = false;
+            bool fUsingDirective = false;
 
             bool fExpression = false;
             bool fAnonymousMethod = false;
@@ -103,6 +104,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             bool fIdentifierName = false;
             bool fInitializerExpression = false;
             bool fInterpolatedStringExpression = false;
+            bool fInterpolation = false;
             bool fInvocationExpression = false;
             bool fLambdaExpression = false;
             bool fLiteralExpression = false;
@@ -194,7 +196,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                     if (!fParameterList
                         && kind == SyntaxKind.ParameterList)
                     {
-                        ParameterListRefactoring.ComputeRefactorings(context, (ParameterListSyntax)node);
+                        await ParameterListRefactoring.ComputeRefactoringsAsync(context, (ParameterListSyntax)node).ConfigureAwait(false);
                         fParameterList = true;
                         continue;
                     }
@@ -223,6 +225,14 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                         continue;
                     }
 
+                    if (!fInterpolation
+                        && kind == SyntaxKind.Interpolation)
+                    {
+                        InterpolationRefactoring.ComputeRefactorings(context, (InterpolationSyntax)node);
+                        fInterpolation = true;
+                        continue;
+                    }
+
                     if (!fElseClause
                         && kind == SyntaxKind.ElseClause)
                     {
@@ -236,6 +246,14 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                     {
                         await CaseSwitchLabelRefactoring.ComputeRefactoringsAsync(context, (CaseSwitchLabelSyntax)node).ConfigureAwait(false);
                         fCaseSwitchLabel = true;
+                        continue;
+                    }
+
+                    if (!fUsingDirective
+                        && kind == SyntaxKind.UsingDirective)
+                    {
+                        UsingDirectiveRefactoring.ComputeRefactoring(context, (UsingDirectiveSyntax)node);
+                        fUsingDirective = true;
                         continue;
                     }
 
@@ -285,7 +303,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                         if (!fQualifiedName
                             && kind == SyntaxKind.QualifiedName)
                         {
-                            await QualifiedNameRefactoring.ComputeRefactoringsAsync(context, (QualifiedNameSyntax)expression);
+                            await QualifiedNameRefactoring.ComputeRefactoringsAsync(context, (QualifiedNameSyntax)expression).ConfigureAwait(false);
                             fQualifiedName = true;
                         }
 
@@ -551,12 +569,13 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                         {
                             DirectiveTriviaRefactoring.ComputeRefactorings(context, directiveTrivia);
 
-                            if (node.IsKind(
-                                SyntaxKind.RegionDirectiveTrivia,
-                                SyntaxKind.EndRegionDirectiveTrivia))
-                            {
+                            if (node.IsKind(SyntaxKind.RegionDirectiveTrivia,SyntaxKind.EndRegionDirectiveTrivia))
                                 RegionDirectiveTriviaRefactoring.ComputeRefactorings(context);
-                            }
+
+                            RemoveAllPreprocessorDirectivesRefactoring.ComputeRefactorings(context);
+
+                            if (node.IsKind(SyntaxKind.RegionDirectiveTrivia, SyntaxKind.EndRegionDirectiveTrivia))
+                                RegionDirectiveTriviaRefactoring.ComputeRefactorings(context, (RegionDirectiveTriviaSyntax)node);
 
                             fDirectiveTrivia = true;
                         }

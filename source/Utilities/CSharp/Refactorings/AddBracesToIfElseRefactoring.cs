@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis.CSharp.Analysis;
+using Roslynator.CSharp.Analysis;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     public static class AddBracesToIfElseRefactoring
     {
@@ -51,7 +51,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                 if (node == null)
                     throw new ArgumentNullException(nameof(node));
 
-                if (_previousIf == null || _previousIf.Equals(IfElseChainAnalysis.GetPreviousIf(node)))
+                if (_previousIf == null || _previousIf.Equals(IfElseAnalysis.GetPreviousIf(node)))
                 {
                     if (node.Statement != null
                         && !node.Statement.IsKind(SyntaxKind.Block))

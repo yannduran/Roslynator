@@ -6,9 +6,9 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Pihrtsoft.CodeAnalysis.CSharp.Analyzers;
+using Roslynator.CSharp.Analyzers;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
+namespace Roslynator.CSharp.DiagnosticAnalyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class IfStatementSyntaxDiagnosticAnalyzer : BaseDiagnosticAnalyzer
@@ -48,7 +48,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
 
             if (ifStatement.Else != null)
             {
-                var result = new IfElseChainAnalysisResult(ifStatement);
+                var result = new IfElseAnalysisResult(ifStatement);
 
                 if (result.AddBraces)
                 {

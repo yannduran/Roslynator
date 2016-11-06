@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class ReturnExpressionRefactoring
     {
@@ -16,7 +16,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             if (expression != null
                 && context.SupportsSemanticModel)
             {
-                MemberDeclarationSyntax declaration = GetContainingMember(expression);
+                MemberDeclarationSyntax declaration = GetContainingMethodOrPropertyOrIndexer(expression);
 
                 if (declaration != null)
                 {
@@ -81,14 +81,14 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                                     }
                                 }
 
-                                if (context.IsRefactoringEnabled(RefactoringIdentifiers.AddCastExpression)
+                                if (context.IsAnyRefactoringEnabled(RefactoringIdentifiers.AddCastExpression, RefactoringIdentifiers.AddToMethodInvocation)
                                     && !memberTypeSymbol.IsErrorType())
                                 {
                                     ITypeSymbol castTypeSymbol = GetCastTypeSymbol(memberSymbol, memberTypeSymbol, expressionSymbol, semanticModel);
 
                                     if (castTypeSymbol != null)
                                     {
-                                        AddCastExpressionRefactoring.RegisterRefactoring(
+                                        ModifyExpressionRefactoring.ComputeRefactoring(
                                            context,
                                            expression,
                                            castTypeSymbol,
@@ -105,10 +105,10 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
         private static void RegisterChangeType(RefactoringContext context, MemberDeclarationSyntax member, TypeSyntax type, ITypeSymbol newType)
         {
             context.RegisterRefactoring(
-            $"Change {GetText(member)} type to '{newType.ToDisplayString(TypeSyntaxRefactoring.SymbolDisplayFormat)}'",
+            $"Change {GetText(member)} type to '{newType.ToDisplayString(SyntaxUtility.DefaultSymbolDisplayFormat)}'",
             cancellationToken =>
             {
-                return TypeSyntaxRefactoring.ChangeTypeAsync(
+                return ChangeTypeRefactoring.ChangeTypeAsync(
                     context.Document,
                     type,
                     newType,
@@ -240,7 +240,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             }
         }
 
-        internal static MemberDeclarationSyntax GetContainingMember(ExpressionSyntax expression)
+        internal static MemberDeclarationSyntax GetContainingMethodOrPropertyOrIndexer(ExpressionSyntax expression)
         {
             foreach (SyntaxNode ancestor in expression.Ancestors())
             {

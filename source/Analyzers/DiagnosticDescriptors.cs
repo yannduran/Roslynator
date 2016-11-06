@@ -2,7 +2,7 @@
 
 using Microsoft.CodeAnalysis;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp
+namespace Roslynator.CSharp
 {
     public static class DiagnosticDescriptors
     {
@@ -862,5 +862,41 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
              defaultSeverity: DiagnosticSeverity.Info,
              isEnabledByDefault: true
          );
-    }
+
+        public static readonly DiagnosticDescriptor RemoveEmptyRegion = new DiagnosticDescriptor(
+             id: DiagnosticIdentifiers.RemoveEmptyRegion,
+             title: "Remove empty region.",
+             messageFormat: "Consider removing empty region.",
+             category: DiagnosticCategories.General,
+             defaultSeverity: DiagnosticSeverity.Info,
+             isEnabledByDefault: true
+         );
+
+        public static readonly DiagnosticDescriptor AddEmptyLineAfterLastStatementInDoStatement = new DiagnosticDescriptor(
+             id: DiagnosticIdentifiers.AddEmptyLineAfterLastStatementInDoStatement,
+             title: "Add empty line after last statement in do statement.",
+             messageFormat: "Consider adding empty line after last statement in do statement.",
+             category: DiagnosticCategories.General,
+             defaultSeverity: DiagnosticSeverity.Info,
+             isEnabledByDefault: false
+         );
+
+        public static readonly DiagnosticDescriptor RemoveFileWithNoCode = new DiagnosticDescriptor(
+             id: DiagnosticIdentifiers.RemoveFileWithNoCode,
+             title: "Remove file with no code.",
+             messageFormat: "Consider removing file with no code.",
+             category: DiagnosticCategories.General,
+             defaultSeverity: DiagnosticSeverity.Info,
+             isEnabledByDefault: true
+         );
+
+        public static readonly DiagnosticDescriptor DeclareUsingDirectiveOnTopLevel = new DiagnosticDescriptor(
+             id: DiagnosticIdentifiers.DeclareUsingDirectiveOnTopLevel,
+             title: "Declare using directive on top level.",
+             messageFormat: "Consider declaring using directive on top level.",
+             category: DiagnosticCategories.General,
+             defaultSeverity: DiagnosticSeverity.Warning,
+             isEnabledByDefault: false
+         );
+     }
 }

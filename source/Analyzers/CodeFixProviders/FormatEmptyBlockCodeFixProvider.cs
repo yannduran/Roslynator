@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
+namespace Roslynator.CSharp.CodeFixProviders
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(FormatEmptyBlockCodeFixProvider))]
     [Shared]
@@ -46,7 +46,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
 
             BlockSyntax newBlock = block
                 .WithOpenBraceToken(block.OpenBraceToken.WithoutTrailingTrivia())
-                .WithCloseBraceToken(block.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLine))
+                .WithCloseBraceToken(block.CloseBraceToken.WithLeadingTrivia(CSharpFactory.NewLineTrivia()))
                 .WithFormatterAnnotation();
 
             SyntaxNode newRoot = oldRoot.ReplaceNode(block, newBlock);

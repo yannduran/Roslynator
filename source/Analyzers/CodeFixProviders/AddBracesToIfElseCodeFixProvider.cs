@@ -7,10 +7,10 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis.CSharp.Analysis;
-using Pihrtsoft.CodeAnalysis.CSharp.Refactorings;
+using Roslynator.CSharp.Analysis;
+using Roslynator.CSharp.Refactorings;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
+namespace Roslynator.CSharp.CodeFixProviders
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(AddBracesToIfElseCodeFixProvider))]
     [Shared]
@@ -30,7 +30,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
             if (ifStatement == null)
                 return;
 
-            ifStatement = IfElseChainAnalysis.GetTopmostIf(ifStatement);
+            ifStatement = IfElseAnalysis.GetTopmostIf(ifStatement);
 
             CodeAction codeAction = CodeAction.Create(
                 "Add braces to if-else",

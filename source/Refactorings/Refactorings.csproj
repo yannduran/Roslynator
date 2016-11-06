@@ -8,7 +8,7 @@
     <ProjectGuid>{3AD7B124-7B99-440D-84A1-858BE5AE268B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pihrtsoft.CodeAnalysis.CSharp.Refactorings</RootNamespace>
+    <RootNamespace>Roslynator.CSharp.Refactorings</RootNamespace>
     <AssemblyName>Roslynator.CSharp.Refactorings</AssemblyName>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
@@ -41,12 +41,20 @@
     <AssemblyOriginatorKeyFile>Roslynator.CSharp.Refactorings.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Refactorings\GenerateOnEventMethodRefactoring.cs" />
+    <Compile Include="Refactorings\AddToMethodInvocationRefactoring.cs" />
+    <Compile Include="Refactorings\EventDeclarationRefactoring.cs" />
+    <Compile Include="Refactorings\GenerateBaseConstructorsRefactoring.cs" />
+    <Compile Include="Refactorings\InlineMethod\IdentifierNameSyntaxRewriter.cs" />
+    <Compile Include="Refactorings\InlineMethod\ParameterInfo.cs" />
+    <Compile Include="Refactorings\InterpolationRefactoring.cs" />
     <Compile Include="Refactorings\AttributeListRefactoring.cs" />
     <Compile Include="RefactoringIdentifiers.cs" />
     <Compile Include="RefactoringIdentifierSet.cs" />
     <Compile Include="RefactoringSettings.cs" />
     <Compile Include="Refactorings\ExtractTypeDeclarationToNewFileRefactoring.cs" />
     <Compile Include="Refactorings\MergeLocalDeclarationsRefactoring.cs" />
+    <Compile Include="Refactorings\ReplaceInterpolatedStringWithInterpolationExpressionRefactoring.cs" />
     <Compile Include="Refactorings\ReplacePropertyWithMethod\ReplacePropertyWithMethodSyntaxRewriter.cs" />
     <Compile Include="Refactorings\SelectedStatementsRefactoring.cs" />
     <Compile Include="Refactorings\ExtractExpressionFromCondition\ExtractExpressionFromConditionRefactoring.cs" />
@@ -78,7 +86,7 @@
     <Compile Include="Refactorings\MergeIfStatementsRefactoring.cs" />
     <Compile Include="Refactorings\RemoveStatementsFromSwitchSectionsRefactoring.cs" />
     <Compile Include="Refactorings\AddDefaultValueToReturnStatementRefactoring.cs" />
-    <Compile Include="Refactorings\InlineMethodRefactoring.cs" />
+    <Compile Include="Refactorings\InlineMethod\InlineMethodRefactoring.cs" />
     <Compile Include="Refactorings\ReturnExpressionRefactoring.cs" />
     <Compile Include="Refactorings\ExtractExpressionFromCondition\ExtractExpressionFromIfConditionRefactoring.cs" />
     <Compile Include="Refactorings\WrapStatements\WrapStatementsRefactoring.cs" />
@@ -225,7 +233,12 @@
     <Compile Include="Refactorings\SwapExpressionsRefactoring.cs" />
     <Compile Include="Refactorings\MemberDeclarationsRefactoring.cs" />
     <Compile Include="Refactorings\ReplaceMethodWithProperty\ReplaceMethodWithPropertySyntaxRewriter.cs" />
+    <Compile Include="Refactorings\RemoveInterpolationRefactoring.cs" />
     <Compile Include="Refactorings\ReplaceNullLiteralExpressionWithDefaultExpressionRefactoring.cs" />
+    <Compile Include="Refactorings\RemoveAllPreprocessorDirectivesRefactoring.cs" />
+    <Compile Include="Refactorings\ReplaceIfElseWithSwitchRefactoring.cs" />
+    <Compile Include="Refactorings\ReplaceEqualsExpressionWithStringEqualsRefactoring.cs" />
+    <Compile Include="Refactorings\ReplaceAsWithCastRefactoring.cs" />
     <Compile Include="StringLiteralChain.cs" />
     <Compile Include="SyntaxHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -233,6 +246,8 @@
     <Compile Include="Refactorings\NodeInList\NodeSyntaxRewriter.cs" />
     <Compile Include="Refactorings\NodeInList\ParameterSyntaxRewriter.cs" />
     <Compile Include="Refactorings\NodeInList\ArgumentSyntaxRewriter.cs" />
+    <Compile Include="Refactorings\ModifyExpressionRefactoring.cs" />
+    <Compile Include="Refactorings\UsingDirectiveRefactoring.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -292,8 +307,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\packages\CSharpAnalyzers.1.0.0\analyzers\dotnet\cs\Roslynator.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\CSharpAnalyzers.1.0.0\analyzers\dotnet\cs\Roslynator.Utilities.dll" />
+    <Analyzer Include="..\..\packages\CSharpAnalyzers.1.1.0\analyzers\dotnet\cs\Roslynator.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\CSharpAnalyzers.1.1.0\analyzers\dotnet\cs\Roslynator.Utilities.dll" />
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>

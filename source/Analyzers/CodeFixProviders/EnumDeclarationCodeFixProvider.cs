@@ -10,9 +10,9 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis;
+using Roslynator;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
+namespace Roslynator.CSharp.CodeFixProviders
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(EnumDeclarationCodeFixProvider))]
     [Shared]
@@ -73,7 +73,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
                     SyntaxTriviaList triviaList = token.TrailingTrivia;
 
                     if (!triviaList.Contains(SyntaxKind.EndOfLineTrivia))
-                        return token.WithTrailingTrivia(triviaList.TrimEnd().Add(CSharpFactory.NewLine));
+                        return token.WithTrailingTrivia(triviaList.TrimEnd().Add(CSharpFactory.NewLineTrivia()));
                 }
 
                 return base.VisitToken(token);

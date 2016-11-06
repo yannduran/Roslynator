@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class ChangeMethodReturnTypeToVoidRefactoring
     {
@@ -32,7 +32,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                             "Change return type to 'void'",
                             cancellationToken =>
                             {
-                                return TypeSyntaxRefactoring.ChangeTypeAsync(
+                                return ChangeTypeRefactoring.ChangeTypeAsync(
                                     context.Document,
                                     methodDeclaration.ReturnType,
                                     CSharpFactory.VoidType(),

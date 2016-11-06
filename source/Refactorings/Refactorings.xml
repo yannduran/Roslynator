@@ -84,6 +84,14 @@
     </Syntaxes>
     <Scope>missing identifier</Scope>
   </Refactoring>
+  <Refactoring Id="AddToMethodInvocation" Title="Add 'To...' method invocation" ExtensionVersion="1.0.7">
+    <Syntaxes>
+      <Syntax>argument</Syntax>
+      <Syntax>assignment expression</Syntax>
+      <Syntax>return statement</Syntax>
+      <Syntax>variable declaration</Syntax>
+    </Syntaxes>
+  </Refactoring>
   <Refactoring Id="AddUsingDirective" Title="Add using directive" ExtensionVersion="0.97.0">
     <Syntaxes>
       <Syntax>qualified name</Syntax>
@@ -339,6 +347,18 @@
       <Image>FormatAllParametersOnSingleLine</Image>
     </Images>
   </Refactoring>
+  <Refactoring Id="GenerateBaseConstructors" Title="Generate base constructors" ExtensionVersion="1.0.5">
+    <Syntaxes>
+      <Syntax>class declaration</Syntax>
+    </Syntaxes>
+    <Scope>identifier</Scope>
+  </Refactoring>
+  <Refactoring Id="GenerateOnEventMethod" Title="Generate 'OnEvent' method" ExtensionVersion="1.0.6">
+    <Syntaxes>
+      <Syntax>event</Syntax>
+    </Syntaxes>
+    <Scope>identifier</Scope>
+  </Refactoring>
   <Refactoring Id="GenerateSwitchSections" Title="Generate switch sections" ExtensionVersion="0.9.70">
     <Syntaxes>
       <Syntax>switch statement (that is empty or contains only default section)</Syntax>
@@ -507,7 +527,7 @@
       <Syntax>selected expression</Syntax>
     </Syntaxes>
   </Refactoring>
-  <Refactoring Id="PromoteLocalToParameter" Title="Promote local to parameter" ExtensionVersion="0.0.0">
+  <Refactoring Id="PromoteLocalToParameter" Title="Promote local to parameter" ExtensionVersion="1.0.4">
     <Syntaxes>
       <Syntax>local declaration in method</Syntax>
     </Syntaxes>
@@ -536,6 +556,11 @@
       <Syntax>interface</Syntax>
     </Syntaxes>
     <Scope>opening or closing brace</Scope>
+  </Refactoring>
+  <Refactoring Id="RemoveAllPreprocessorDirectives" Title="Remove all preprocessor directives" ExtensionVersion="1.0.7">
+    <Syntaxes>
+      <Syntax>preprocessor directive</Syntax>
+    </Syntaxes>
   </Refactoring>
   <Refactoring Id="RemoveAllRegionDirectives" Title="Remove all region directives" ExtensionVersion="0.9.0">
     <Syntaxes>
@@ -611,6 +636,12 @@
       <Syntax>selected lines</Syntax>
     </Syntaxes>
   </Refactoring>
+  <Refactoring Id="RemoveInterpolation" Title="Remove interpolation" ExtensionVersion="1.0.4">
+    <Syntaxes>
+      <Syntax>string interpolation</Syntax>
+    </Syntaxes>
+    <Scope>opening or closing brace</Scope>
+  </Refactoring>
   <Refactoring Id="RemoveMember" Title="Remove member" ExtensionVersion="0.9.0">
     <Syntaxes>
       <Syntax>method</Syntax>
@@ -647,6 +678,11 @@
       <Syntax>property initializer</Syntax>
     </Syntaxes>
   </Refactoring>
+  <Refactoring Id="RemoveRegion" Title="Remove region" ExtensionVersion="1.1.1">
+    <Syntaxes>
+      <Syntax>region directive</Syntax>
+    </Syntaxes>
+  </Refactoring>
   <Refactoring Id="RemoveStatement" Title="Remove statement" ExtensionVersion="0.91.0">
     <Syntaxes>
       <Syntax>do statement</Syntax>
@@ -669,6 +705,12 @@
     <Syntaxes>
       <Syntax>selected switch sections</Syntax>
     </Syntaxes>
+  </Refactoring>
+  <Refactoring Id="RemoveUsingAliasDirective" Title="Remove using alias directive" ExtensionVersion="1.0.9">
+    <Syntaxes>
+      <Syntax>using alias directive</Syntax>
+    </Syntaxes>
+    <Scope>identifier</Scope>
   </Refactoring>
   <Refactoring Id="RenameBackingFieldAccordingToPropertyName" Title="Rename backing field according to property name" ExtensionVersion="0.9.0">
     <Syntaxes>
@@ -714,6 +756,12 @@
     </Syntaxes>
     <Scope>method name</Scope>
   </Refactoring>
+  <Refactoring Id="ReplaceAsWithCast" Title="Replace as expression with cast expression" ExtensionVersion="1.1.0">
+    <Syntaxes>
+      <Syntax>as expression</Syntax>
+    </Syntaxes>
+    <Scope>operator</Scope>
+  </Refactoring>
   <Refactoring Id="ReplaceConditionalExpressionWithExpression" Title="Replace conditional expression with expression" ExtensionVersion="0.99.0">
     <Syntaxes>
       <Syntax>conditional expression</Syntax>
@@ -747,6 +795,12 @@
       <Syntax>empty string literal</Syntax>
     </Syntaxes>
   </Refactoring>
+  <Refactoring Id="ReplaceEqualsExpressionWithStringEquals" Title="Replace equals expression with string.Equals" ExtensionVersion="1.1.0">
+    <Syntaxes>
+      <Syntax>equals expression</Syntax>
+    </Syntaxes>
+    <Scope>operator</Scope>
+  </Refactoring>
   <Refactoring Id="ReplaceFieldWithConstant" Title="Replace field with constant" ExtensionVersion="0.9.0">
     <Syntaxes>
       <Syntax>read-only field</Syntax>
@@ -772,10 +826,21 @@
       <Syntax>conditional expression</Syntax>
     </Syntaxes>
   </Refactoring>
+  <Refactoring Id="ReplaceIfElseWithSwitch" Title="Replace if-else with switch statement" ExtensionVersion="1.0.8">
+    <Syntaxes>
+      <Syntax>if statement</Syntax>
+    </Syntaxes>
+  </Refactoring>
   <Refactoring Id="ReplaceIncrementOperatorWithDecrementOperator" Title="Replace increment operator with decrement operator" ExtensionVersion="0.9.0">
     <Syntaxes>
       <Syntax>prefix/postfix unary expression</Syntax>
     </Syntaxes>
+  </Refactoring>
+  <Refactoring Id="ReplaceInterpolatedStringWithInterpolationExpression" Title="Replace interpolated string with interpolation expression" ExtensionVersion="1.0.9">
+    <Syntaxes>
+      <Syntax>interpolated string with single interpolation and no text</Syntax>
+    </Syntaxes>
+    <Scope>interpolation</Scope>
   </Refactoring>
   <Refactoring Id="ReplaceInterpolatedStringWithStringLiteral" Title="Replace interpolated string with string literal" ExtensionVersion="0.9.2">
     <Syntaxes>

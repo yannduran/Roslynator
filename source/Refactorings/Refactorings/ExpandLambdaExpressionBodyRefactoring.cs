@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class ExpandLambdaExpressionBodyRefactoring
     {
@@ -49,7 +49,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             block = block
                 .WithCloseBraceToken(
                     block.CloseBraceToken
-                        .WithLeadingTrivia(SyntaxFactory.TriviaList(CSharpFactory.NewLine)));
+                        .WithLeadingTrivia(SyntaxFactory.TriviaList(CSharpFactory.NewLineTrivia())));
 
             switch (lambda.Kind())
             {

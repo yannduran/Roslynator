@@ -2,9 +2,9 @@
 
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis.CSharp.Analysis;
+using Roslynator.CSharp.Analysis;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class IfStatementRefactoring
     {
@@ -13,7 +13,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             if (context.IsAnyRefactoringEnabled(
                     RefactoringIdentifiers.SwapStatementsInIfElse,
                     RefactoringIdentifiers.ReplaceIfElseWithConditionalExpression)
-                && IfElseChainAnalysis.IsTopmostIf(ifStatement)
+                && IfElseAnalysis.IsTopmostIf(ifStatement)
                 && context.Span.IsBetweenSpans(ifStatement))
             {
                 if (context.IsRefactoringEnabled(RefactoringIdentifiers.ReplaceIfElseWithConditionalExpression))

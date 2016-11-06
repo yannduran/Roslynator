@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class ElseClauseRefactoring
     {
@@ -26,6 +26,19 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                             elseClause,
                             cancellationToken);
                     });
+            }
+
+            if (context.IsRefactoringEnabled(RefactoringIdentifiers.AddBraces)
+                && elseClause.Statement?.IsKind(SyntaxKind.IfStatement) == true)
+            {
+                var ifStatement = (IfStatementSyntax)elseClause.Statement;
+
+                if (ifStatement.Else == null
+                    && (ifStatement.IfKeyword.Span.Contains(context.Span)
+                        || context.Span.IsBetweenSpans(ifStatement)))
+                {
+                    AddBracesRefactoring.RegisterRefactoring(context, ifStatement);
+                }
             }
         }
 

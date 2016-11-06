@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class FormatParameterListRefactoring
     {
@@ -52,7 +52,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 
         private static IEnumerable<SyntaxNodeOrToken> CreateNodesAndTokens(ParameterListSyntax list)
         {
-            SyntaxTriviaList trivia = SyntaxUtility.GetIndentTrivia(list.Parent).Add(CSharpFactory.IndentTrivia);
+            SyntaxTriviaList trivia = SyntaxUtility.GetIndentTrivia(list.Parent).Add(CSharpFactory.IndentTrivia());
 
             SeparatedSyntaxList<ParameterSyntax>.Enumerator en = list.Parameters.GetEnumerator();
 

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Josef Pihrt. All rights reserved. Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings.Tests
+namespace Roslynator.CSharp.Refactorings.Tests
 {
     internal class AddBracesRefactoring
     {
@@ -10,6 +10,14 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings.Tests
 
             if (value == null)
                 value = Initialize();
+
+
+            if (value != null)
+            {
+            }
+            else if (value == null)
+            {
+            }
         }
 
         private string Initialize()

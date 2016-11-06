@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
+namespace Roslynator.CSharp.CodeFixProviders
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ConstructorDeclarationCodeFixProvider))]
     [Shared]
@@ -57,7 +57,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
                         {
                             CodeAction codeAction = CodeAction.Create(
                                 "Remove redundant constructor",
-                                cancellationToken => MemberRemover.RemoveAsync(context.Document, constructor, cancellationToken),
+                                cancellationToken => SyntaxRemover.RemoveMemberAsync(context.Document, constructor, cancellationToken),
                                 diagnostic.Id + EquivalenceKeySuffix);
 
                             context.RegisterCodeFix(codeAction, diagnostic);

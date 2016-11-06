@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.SyntaxRewriters
+namespace Roslynator.CSharp.SyntaxRewriters
 {
     public sealed class CommentRemover : CSharpSyntaxRewriter
     {
@@ -56,7 +56,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.SyntaxRewriters
                     case SyntaxKind.MultiLineCommentTrivia:
                         {
                             if (RemoveOptions != CommentRemoveOptions.Documentation)
-                                return CSharpFactory.EmptyWhitespaceTrivia;
+                                return CSharpFactory.EmptyWhitespaceTrivia();
 
                             break;
                         }
@@ -64,14 +64,14 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.SyntaxRewriters
                     case SyntaxKind.MultiLineDocumentationCommentTrivia:
                         {
                             if (RemoveOptions != CommentRemoveOptions.AllExceptDocumentation)
-                                return CSharpFactory.EmptyWhitespaceTrivia;
+                                return CSharpFactory.EmptyWhitespaceTrivia();
 
                             break;
                         }
                     case SyntaxKind.EndOfLineTrivia:
                         {
                             if (ShouldRemoveEndOfLine(span, _syntaxKindSequence))
-                                return CSharpFactory.EmptyWhitespaceTrivia;
+                                return CSharpFactory.EmptyWhitespaceTrivia();
 
                             break;
                         }

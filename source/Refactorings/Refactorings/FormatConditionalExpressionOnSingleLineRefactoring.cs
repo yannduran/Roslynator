@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis;
+using Roslynator;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class FormatConditionalExpressionOnSingleLineRefactoring
     {
@@ -50,7 +50,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             return Token(
                 TriviaList(),
                 kind,
-                TriviaList(CSharpFactory.NewLine));
+                TriviaList(CSharpFactory.NewLineTrivia()));
         }
     }
 }

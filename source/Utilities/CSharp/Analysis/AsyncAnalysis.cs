@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Analysis
+namespace Roslynator.CSharp.Analysis
 {
     public static class AsyncAnalysis
     {
@@ -35,7 +35,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Analysis
             if (semanticModel == null)
                 throw new ArgumentNullException(nameof(semanticModel));
 
-            SyntaxNode method = SyntaxUtility.GetContainingMethod(node);
+            SyntaxNode method = node.GetContainingMethod();
 
             switch (method?.Kind())
             {

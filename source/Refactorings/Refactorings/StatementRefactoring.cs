@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis.CSharp.Analysis;
+using Roslynator.CSharp.Analysis;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class StatementRefactoring
     {
@@ -122,7 +122,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                     {
                         var ifStatement = (IfStatementSyntax)parent;
 
-                        if (IfElseChainAnalysis.IsTopmostIf(ifStatement)
+                        if (IfElseAnalysis.IsTopmostIf(ifStatement)
                             && block.OpenBraceToken.Span.Contains(context.Span))
                         {
                             return ifStatement;
@@ -141,7 +141,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                         var elseClause = (ElseClauseSyntax)parent;
 
                         if (block.CloseBraceToken.Span.Contains(context.Span))
-                            return IfElseChainAnalysis.GetTopmostIf(elseClause);
+                            return IfElseAnalysis.GetTopmostIf(elseClause);
 
                         break;
                     }
@@ -207,7 +207,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             if (index == 0
                 && block.OpenBraceToken.GetFullSpanEndLine() == statement.GetFullSpanStartLine())
             {
-                statement = statement.WithLeadingTrivia(statement.GetLeadingTrivia().Insert(0, CSharpFactory.NewLine));
+                statement = statement.WithLeadingTrivia(statement.GetLeadingTrivia().Insert(0, CSharpFactory.NewLineTrivia()));
             }
 
             BlockSyntax newBlock = block.WithStatements(block.Statements.Insert(index + 1, statement));
@@ -219,7 +219,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 
         private static SyntaxRemoveOptions GetRemoveOptions(StatementSyntax statement)
         {
-            SyntaxRemoveOptions removeOptions = MemberRemover.DefaultRemoveOptions;
+            SyntaxRemoveOptions removeOptions = SyntaxRemover.DefaultMemberRemoveOptions;
 
             if (statement.GetLeadingTrivia().All(f => f.IsWhitespaceOrEndOfLineTrivia()))
                 removeOptions &= ~SyntaxRemoveOptions.KeepLeadingTrivia;

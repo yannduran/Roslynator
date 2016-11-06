@@ -8,13 +8,20 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
+namespace Roslynator.CSharp.DiagnosticAnalyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class NamespaceDeclarationDiagnosticAnalyzer : BaseDiagnosticAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
-            => ImmutableArray.Create(DiagnosticDescriptors.RemoveEmptyNamespaceDeclaration);
+        {
+            get
+            {
+                return ImmutableArray.Create(
+                    DiagnosticDescriptors.RemoveEmptyNamespaceDeclaration,
+                    DiagnosticDescriptors.DeclareUsingDirectiveOnTopLevel);
+            }
+        }
 
         public override void Initialize(AnalysisContext context)
         {
@@ -40,6 +47,15 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.DiagnosticAnalyzers
                 context.ReportDiagnostic(
                     DiagnosticDescriptors.RemoveEmptyNamespaceDeclaration,
                     declaration.GetLocation());
+            }
+
+            SyntaxList<UsingDirectiveSyntax> usings = declaration.Usings;
+
+            if (usings.Any())
+            {
+                context.ReportDiagnostic(
+                    DiagnosticDescriptors.DeclareUsingDirectiveOnTopLevel,
+                    Location.Create(declaration.SyntaxTree, usings.Span));
             }
         }
     }

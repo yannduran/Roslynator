@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
+namespace Roslynator.CSharp.CodeFixProviders
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(AddEmptyLineAfterEmbeddedStatementCodeFixProvider))]
     [Shared]
@@ -45,7 +45,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.CodeFixProviders
             SyntaxNode oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
             StatementSyntax newNode = node
-                .WithTrailingTrivia(node.GetTrailingTrivia().Add(CSharpFactory.NewLine))
+                .WithTrailingTrivia(node.GetTrailingTrivia().Add(CSharpFactory.NewLineTrivia()))
                 .WithFormatterAnnotation();
 
             SyntaxNode newRoot = oldRoot.ReplaceNode(node, newNode);

@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class GenerateSwitchSectionsRefactoring
     {
@@ -88,7 +88,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 
             var sections = new List<SwitchSectionSyntax>(members.Length);
 
-            TypeSyntax enumType = TypeSyntaxRefactoring.CreateTypeSyntax(enumTypeSymbol);
+            TypeSyntax enumType = CSharpFactory.Type(enumTypeSymbol);
 
             if (members.Length <= 128)
                 enumType = enumType.WithSimplifierAnnotation();

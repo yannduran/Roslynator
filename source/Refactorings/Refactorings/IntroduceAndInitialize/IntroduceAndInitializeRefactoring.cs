@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings.IntroduceAndInitialize
+namespace Roslynator.CSharp.Refactorings.IntroduceAndInitialize
 {
     internal abstract class IntroduceAndInitializeRefactoring
     {
@@ -114,7 +114,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings.IntroduceAndInitialize
 
             ConstructorDeclarationSyntax constructor = Constructor;
 
-            MemberDeclarationSyntax containingMember = constructor.GetContainingMember();
+            MemberDeclarationSyntax containingMember = constructor.GetParentMember();
 
             SyntaxList<MemberDeclarationSyntax> members = containingMember.GetMembers();
 

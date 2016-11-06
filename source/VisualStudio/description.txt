@@ -1,7 +1,7 @@
 ﻿<h3>Introduction</h3>
 
 <p>
-    A collection of 80+ analyzers and 130+ refactorings for C#, powered by Roslyn.
+    A collection of 90+ analyzers and 150+ refactorings for C#, powered by Roslyn.
 </p>
 
 <h3>Links</h3>
@@ -128,6 +128,10 @@
         <li>RCS1088 - Avoid usage of tab.</li>
         <li>RCS1089 - Use postfix unary operator instead of assignment.</li>
         <li>RCS1090 - Add 'ConfigureAwait(false)' to awaitable expression.</li>
+        <li>RCS1091 - Remove empty region.</li>
+        <li>RCS1092 - Add empty line after last statement in do statement.</li>
+        <li>RCS1093 - Remove file with no code.</li>
+        <li>RCS1094 - Declare using directive on top level.</li>
     </ul>
     <h3>List of Refactorings</h3>
     <ul>
@@ -166,6 +170,9 @@
         </li>
         <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#add-parameter-name-to-parameter">Add parameter name to parameter</a>
+        </li>
+        <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#add-to-method-invocation">Add 'To...' method invocation</a>
         </li>
         <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#add-using-directive">Add using directive</a>
@@ -279,6 +286,12 @@
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#format-parameter-list">Format parameter list</a>
         </li>
         <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#generate-base-constructors">Generate base constructors</a>
+        </li>
+        <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#generate-onevent-method">Generate 'OnEvent' method</a>
+        </li>
+        <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#generate-switch-sections">Generate switch sections</a>
         </li>
         <li>
@@ -357,6 +370,9 @@
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-all-member-declarations">Remove all member declarations</a>
         </li>
         <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-all-preprocessor-directives">Remove all preprocessor directives</a>
+        </li>
+        <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-all-region-directives">Remove all region directives</a>
         </li>
         <li>
@@ -390,6 +406,9 @@
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-empty-lines">Remove empty lines</a>
         </li>
         <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-interpolation">Remove interpolation</a>
+        </li>
+        <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-member">Remove member</a>
         </li>
         <li>
@@ -405,10 +424,16 @@
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-property-initializer">Remove property initializer</a>
         </li>
         <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-region">Remove region</a>
+        </li>
+        <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-statement">Remove statement</a>
         </li>
         <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-statements-from-switch-sections">Remove statements from switch sections</a>
+        </li>
+        <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#remove-using-alias-directive">Remove using alias directive</a>
         </li>
         <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#rename-backing-field-according-to-property-name">Rename backing field according to property name</a>
@@ -435,6 +460,9 @@
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-anyall-with-allany">Replace 'Any/All' with 'All/Any'</a>
         </li>
         <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-as-expression-with-cast-expression">Replace as expression with cast expression</a>
+        </li>
+        <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-conditional-expression-with-expression">Replace conditional expression with expression</a>
         </li>
         <li>
@@ -448,6 +476,9 @@
         </li>
         <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-do-statement-with-while-statement">Replace do statement with while statement</a>
+        </li>
+        <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-equals-expression-with-stringequals">Replace equals expression with string.Equals</a>
         </li>
         <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-field-with-constant">Replace field with constant</a>
@@ -465,7 +496,13 @@
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-if-else-with-conditional-expression">Replace if-else with conditional expression</a>
         </li>
         <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-if-else-with-switch-statement">Replace if-else with switch statement</a>
+        </li>
+        <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-increment-operator-with-decrement-operator">Replace increment operator with decrement operator</a>
+        </li>
+        <li>
+            <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-interpolated-string-with-interpolation-expression">Replace interpolated string with interpolation expression</a>
         </li>
         <li>
             <a href="http://github.com/JosefPihrt/Roslynator/blob/master/source/Refactorings/README.md#replace-interpolated-string-with-string-literal">Replace interpolated string with string literal</a>

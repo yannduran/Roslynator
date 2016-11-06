@@ -1,21 +1,62 @@
 ﻿// Copyright (c) Josef Pihrt. All rights reserved. Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp
+namespace Roslynator.CSharp
 {
     public static class CSharpFactory
     {
-        public static SyntaxTrivia IndentTrivia { get; } = Whitespace("    ");
+        private static readonly SymbolDisplayFormat _typeSyntaxSymbolDisplayFormat = new SymbolDisplayFormat(
+            genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+            typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+            miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
 
-        public static SyntaxTrivia EmptyWhitespaceTrivia { get; } = SyntaxTrivia(SyntaxKind.WhitespaceTrivia, string.Empty);
+        public static SyntaxTrivia IndentTrivia()
+        {
+            return Whitespace("    ");
+        }
 
-        public static SyntaxTrivia NewLine { get; } = CreateNewLine();
+        public static SyntaxTrivia EmptyWhitespaceTrivia()
+        {
+            return SyntaxTrivia(SyntaxKind.WhitespaceTrivia, string.Empty);
+        }
+
+        public static SyntaxTrivia NewLineTrivia()
+        {
+            switch (Environment.NewLine)
+            {
+                case "\r":
+                    return CarriageReturn;
+                case "\n":
+                    return LineFeed;
+                default:
+                    return CarriageReturnLineFeed;
+            }
+        }
+
+        public static TypeSyntax Type(ITypeSymbol typeSymbol)
+        {
+            return Type(typeSymbol, _typeSyntaxSymbolDisplayFormat);
+        }
+
+        public static TypeSyntax Type(ITypeSymbol typeSymbol, SymbolDisplayFormat symbolDisplayFormat)
+        {
+            if (typeSymbol == null)
+                throw new ArgumentNullException(nameof(typeSymbol));
+
+            if (symbolDisplayFormat == null)
+                throw new ArgumentNullException(nameof(symbolDisplayFormat));
+
+            string s = typeSymbol.ToDisplayString(symbolDisplayFormat);
+
+            return ParseTypeName(s);
+        }
 
         internal static SyntaxTokenList TokenList(params SyntaxKind[] kinds)
         {
@@ -123,18 +164,29 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
             return SyntaxFactory.InvocationExpression(IdentifierName(name));
         }
 
-        public static InvocationExpressionSyntax InvocationExpression(string name, ArgumentSyntax argument)
+        public static InvocationExpressionSyntax InvocationExpression(string name, ArgumentListSyntax argumentList)
         {
-            return SyntaxFactory.InvocationExpression(
-                IdentifierName(name),
-                ArgumentList(argument));
+            return SyntaxFactory.InvocationExpression(IdentifierName(name), argumentList);
         }
 
-        public static InvocationExpressionSyntax InvocationExpression(string name, params ArgumentSyntax[] arguments)
+        public static InvocationExpressionSyntax InvocationExpression(ExpressionSyntax expression, string name)
         {
-            return SyntaxFactory.InvocationExpression(
-                IdentifierName(name),
-                ArgumentList(arguments));
+            return InvocationExpression(expression, IdentifierName(name));
+        }
+
+        public static InvocationExpressionSyntax InvocationExpression(ExpressionSyntax expression, SimpleNameSyntax name)
+        {
+            return SyntaxFactory.InvocationExpression(SimpleMemberAccessExpression(expression, name));
+        }
+
+        public static InvocationExpressionSyntax InvocationExpression(ExpressionSyntax expression, string name, ArgumentListSyntax argumentList)
+        {
+            return InvocationExpression(expression, IdentifierName(name), argumentList);
+        }
+
+        public static InvocationExpressionSyntax InvocationExpression(ExpressionSyntax expression, SimpleNameSyntax name, ArgumentListSyntax argumentList)
+        {
+            return SyntaxFactory.InvocationExpression(SimpleMemberAccessExpression(expression, name), argumentList);
         }
 
         public static AccessorDeclarationSyntax Getter(BlockSyntax body = null)
@@ -352,6 +404,11 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
             return Token(SyntaxKind.PartialKeyword);
         }
 
+        public static SyntaxToken VirtualToken()
+        {
+            return Token(SyntaxKind.VirtualKeyword);
+        }
+
         public static IdentifierNameSyntax Var()
         {
             return IdentifierName("var");
@@ -372,6 +429,55 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
         }
 
         public static LiteralExpressionSyntax NumericLiteralExpression(int value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(uint value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(sbyte value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(decimal value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(double value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(float value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(long value)
+        {
+            return LiteralExpression(
+                SyntaxKind.NumericLiteralExpression,
+                Literal(value));
+        }
+
+        public static LiteralExpressionSyntax NumericLiteralExpression(ulong value)
         {
             return LiteralExpression(
                 SyntaxKind.NumericLiteralExpression,
@@ -428,6 +534,11 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
             return BinaryExpression(SyntaxKind.NotEqualsExpression, left, right);
         }
 
+        public static PrefixUnaryExpressionSyntax LogicalNotExpression(ExpressionSyntax operand)
+        {
+            return PrefixUnaryExpression(SyntaxKind.LogicalNotExpression, operand);
+        }
+
         public static AttributeSyntax Attribute(string name, AttributeArgumentSyntax argument)
         {
             return Attribute(IdentifierName(name), argument);
@@ -458,7 +569,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
         {
             return InvocationExpression(
                 "nameof",
-                Argument(identifier));
+                ArgumentList(Argument(identifier)));
         }
 
         public static UsingDirectiveSyntax UsingStaticDirective(string name)
@@ -558,19 +669,6 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
             return YieldStatement(SyntaxKind.YieldBreakStatement);
         }
 
-        private static SyntaxTrivia CreateNewLine()
-        {
-            switch (Environment.NewLine)
-            {
-                case "\r":
-                    return CarriageReturn;
-                case "\n":
-                    return LineFeed;
-                default:
-                    return CarriageReturnLineFeed;
-            }
-        }
-
         public static ObjectCreationExpressionSyntax ObjectCreationExpression(TypeSyntax type, ArgumentListSyntax argumentList)
         {
             return SyntaxFactory.ObjectCreationExpression(type, argumentList, default(InitializerExpressionSyntax));
@@ -604,6 +702,43 @@ namespace Pihrtsoft.CodeAnalysis.CSharp
         public static PostfixUnaryExpressionSyntax PostDecrementExpression(ExpressionSyntax operand)
         {
             return PostfixUnaryExpression(SyntaxKind.PostDecrementExpression, operand);
+        }
+
+        public static ConstructorInitializerSyntax BaseConstructorInitializer(ArgumentListSyntax argumentList = null)
+        {
+            return ConstructorInitializer(SyntaxKind.BaseConstructorInitializer, argumentList);
+        }
+
+        public static ConstructorInitializerSyntax ThisConstructorInitializer(ArgumentListSyntax argumentList = null)
+        {
+            return ConstructorInitializer(SyntaxKind.ThisConstructorInitializer, argumentList);
+        }
+
+        public static ParameterListSyntax ParameterList(IEnumerable<ParameterSyntax> parameters)
+        {
+            return SyntaxFactory.ParameterList(SeparatedList(parameters));
+        }
+
+        public static ParameterListSyntax ParameterList(ParameterSyntax parameter)
+        {
+            return SyntaxFactory.ParameterList(SingletonSeparatedList(parameter));
+        }
+
+        public static ParameterListSyntax ParameterList(params ParameterSyntax[] parameters)
+        {
+            return SyntaxFactory.ParameterList(SeparatedList(parameters));
+        }
+
+        public static SwitchSectionSyntax DefaultSwitchSection(StatementSyntax statement)
+        {
+            return DefaultSwitchSection(SingletonList(statement));
+        }
+
+        public static SwitchSectionSyntax DefaultSwitchSection(SyntaxList<StatementSyntax> statements)
+        {
+            return SwitchSection(
+                SingletonList<SwitchLabelSyntax>(DefaultSwitchLabel()),
+                statements);
         }
     }
 }

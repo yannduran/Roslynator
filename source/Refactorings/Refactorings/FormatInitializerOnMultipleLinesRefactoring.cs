@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class FormatInitializerOnMultipleLinesRefactoring
     {
@@ -37,15 +37,15 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                 return initializer
                     .WithExpressions(
                         SeparatedList(
-                            initializer.Expressions.Select(expression => expression.WithLeadingTrivia(CSharpFactory.NewLine))))
+                            initializer.Expressions.Select(expression => expression.WithLeadingTrivia(CSharpFactory.NewLineTrivia()))))
                     .WithFormatterAnnotation();
             }
 
             SyntaxTriviaList indent = SyntaxUtility.GetIndentTrivia(initializer);
-            SyntaxTriviaList indent2 = indent.Add(CSharpFactory.IndentTrivia);
+            SyntaxTriviaList indent2 = indent.Add(CSharpFactory.IndentTrivia());
 
-            indent = indent.Insert(0, CSharpFactory.NewLine);
-            indent2 = indent2.Insert(0, CSharpFactory.NewLine);
+            indent = indent.Insert(0, CSharpFactory.NewLineTrivia());
+            indent2 = indent2.Insert(0, CSharpFactory.NewLineTrivia());
 
             return initializer
                 .WithExpressions(

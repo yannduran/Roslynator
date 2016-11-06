@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Josef Pihrt. All rights reserved. Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Pihrtsoft.CodeAnalysis.CSharp.Refactorings.IntroduceAndInitialize;
-using Pihrtsoft.CodeAnalysis.CSharp.Refactorings.NodeInList;
+using Roslynator.CSharp.Refactorings.IntroduceAndInitialize;
+using Roslynator.CSharp.Refactorings.NodeInList;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class ParameterListRefactoring
     {
-        public static void ComputeRefactorings(RefactoringContext context, ParameterListSyntax parameterList)
+        public static async Task ComputeRefactoringsAsync(RefactoringContext context, ParameterListSyntax parameterList)
         {
             SeparatedSyntaxList<ParameterSyntax> parameters = parameterList.Parameters;
 
@@ -21,6 +22,9 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                 var refactoring = new DuplicateParameterRefactoring(parameterList);
                 refactoring.ComputeRefactoring(context);
             }
+
+            if (context.IsRefactoringEnabled(RefactoringIdentifiers.CheckParameterForNull))
+                await CheckParameterForNullRefactoring.ComputeRefactoringAsync(context, parameterList).ConfigureAwait(false);
 
             if (context.IsAnyRefactoringEnabled(
                 RefactoringIdentifiers.IntroduceAndInitializeField,

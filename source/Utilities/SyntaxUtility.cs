@@ -9,14 +9,18 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.FindSymbols;
-using Pihrtsoft.CodeAnalysis.CSharp.Refactorings;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-using static Pihrtsoft.CodeAnalysis.CSharp.CSharpFactory;
+using static Roslynator.CSharp.CSharpFactory;
 
-namespace Pihrtsoft.CodeAnalysis
+namespace Roslynator
 {
     public static class SyntaxUtility
     {
+        public static SymbolDisplayFormat DefaultSymbolDisplayFormat { get; } = new SymbolDisplayFormat(
+            genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+            typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypes,
+            miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
+
         public static bool AreParenthesesRedundantOrInvalid(ExpressionSyntax expression)
         {
             if (expression == null)
@@ -50,7 +54,12 @@ namespace Pihrtsoft.CodeAnalysis
                 case SyntaxKind.Interpolation:
                     return true;
                 case SyntaxKind.ForEachStatement:
-                    return expression == ((ForEachStatementSyntax)parent).Expression;
+                    {
+                        var forEachStatement = (ForEachStatementSyntax)parent;
+
+                        return expression == forEachStatement.Expression
+                            || expression == forEachStatement.Type;
+                    }
                 case SyntaxKind.WhileStatement:
                     return expression == ((WhileStatementSyntax)parent).Condition;
                 case SyntaxKind.DoStatement:
@@ -112,68 +121,6 @@ namespace Pihrtsoft.CodeAnalysis
             }
 
             return newName;
-        }
-
-        public static IEnumerable<DirectiveTriviaSyntax> GetRegionDirectives(SyntaxNode node)
-        {
-            if (node == null)
-                throw new ArgumentNullException(nameof(node));
-
-            return node.DescendantNodesAndSelf(descendIntoTrivia: true)
-                .Where(f => f.IsKind(SyntaxKind.RegionDirectiveTrivia, SyntaxKind.EndRegionDirectiveTrivia))
-                .Cast<DirectiveTriviaSyntax>();
-        }
-
-        public static TypeDeclarationSyntax GetContainingType(SyntaxNode node)
-        {
-            if (node == null)
-                throw new ArgumentNullException(nameof(node));
-
-            foreach (SyntaxNode ancestor in node.Ancestors())
-            {
-                switch (ancestor.Kind())
-                {
-                    case SyntaxKind.ClassDeclaration:
-                    case SyntaxKind.InterfaceDeclaration:
-                    case SyntaxKind.StructDeclaration:
-                        return (TypeDeclarationSyntax)ancestor;
-                }
-            }
-
-            return null;
-        }
-
-        public static SyntaxNode GetContainingMethod(SyntaxNode node)
-        {
-            if (node == null)
-                throw new ArgumentNullException(nameof(node));
-
-            foreach (SyntaxNode ancestor in node.Ancestors())
-            {
-                switch (ancestor.Kind())
-                {
-                    case SyntaxKind.MethodDeclaration:
-                    case SyntaxKind.SimpleLambdaExpression:
-                    case SyntaxKind.ParenthesizedLambdaExpression:
-                    case SyntaxKind.AnonymousMethodExpression:
-                        {
-                            return ancestor;
-                        }
-                    case SyntaxKind.PropertyDeclaration:
-                    case SyntaxKind.IndexerDeclaration:
-                    case SyntaxKind.ConstructorDeclaration:
-                    case SyntaxKind.DestructorDeclaration:
-                    case SyntaxKind.EventDeclaration:
-                    case SyntaxKind.ConversionOperatorDeclaration:
-                    case SyntaxKind.OperatorDeclaration:
-                    case SyntaxKind.IncompleteMember:
-                        {
-                            break;
-                        }
-                }
-            }
-
-            return null;
         }
 
         public static bool IsUsingStaticDirectiveInScope(
@@ -488,7 +435,7 @@ namespace Pihrtsoft.CodeAnalysis
 
             return CreateDefaultValue(typeSymbol, default(TypeSyntax), f =>
             {
-                return TypeSyntaxRefactoring.CreateTypeSyntax(typeSymbol)
+                return Type(typeSymbol)
                     .WithSimplifierAnnotation();
             });
         }

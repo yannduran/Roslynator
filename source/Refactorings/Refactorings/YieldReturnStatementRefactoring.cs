@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
+namespace Roslynator.CSharp.Refactorings
 {
     internal static class YieldReturnStatementRefactoring
     {
@@ -15,6 +15,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             if (context.IsAnyRefactoringEnabled(
                     RefactoringIdentifiers.ChangeMemberTypeAccordingToYieldReturnExpression,
                     RefactoringIdentifiers.AddCastExpression,
+                    RefactoringIdentifiers.AddToMethodInvocation,
                     RefactoringIdentifiers.CreateConditionFromBooleanExpression)
                 && yieldStatement.IsYieldReturn()
                 && yieldStatement.Expression != null
@@ -22,9 +23,10 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
             {
                 if (context.IsAnyRefactoringEnabled(
                     RefactoringIdentifiers.ChangeMemberTypeAccordingToYieldReturnExpression,
-                    RefactoringIdentifiers.AddCastExpression))
+                    RefactoringIdentifiers.AddCastExpression,
+                    RefactoringIdentifiers.AddToMethodInvocation))
                 {
-                    MemberDeclarationSyntax containingMember = ReturnExpressionRefactoring.GetContainingMember(yieldStatement.Expression);
+                    MemberDeclarationSyntax containingMember = ReturnExpressionRefactoring.GetContainingMethodOrPropertyOrIndexer(yieldStatement.Expression);
 
                     if (containingMember != null)
                     {
@@ -57,13 +59,13 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                                             Identifier("IEnumerable"),
                                             TypeArgumentList(
                                                 SingletonSeparatedList(
-                                                    TypeSyntaxRefactoring.CreateTypeSyntax(typeSymbol)))));
+                                                    CSharpFactory.Type(typeSymbol)))));
 
                                     context.RegisterRefactoring(
-                                        $"Change {ReturnExpressionRefactoring.GetText(containingMember)} type to 'IEnumerable<{typeSymbol.ToDisplayString(TypeSyntaxRefactoring.SymbolDisplayFormat)}>'",
+                                        $"Change {ReturnExpressionRefactoring.GetText(containingMember)} type to 'IEnumerable<{typeSymbol.ToDisplayString(SyntaxUtility.DefaultSymbolDisplayFormat)}>'",
                                         cancellationToken =>
                                         {
-                                            return TypeSyntaxRefactoring.ChangeTypeAsync(
+                                            return ChangeTypeRefactoring.ChangeTypeAsync(
                                                 context.Document,
                                                 memberType,
                                                 newType,
@@ -71,7 +73,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                                         });
                                 }
 
-                                if (context.IsRefactoringEnabled(RefactoringIdentifiers.AddCastExpression)
+                                if (context.IsAnyRefactoringEnabled(RefactoringIdentifiers.AddCastExpression, RefactoringIdentifiers.AddToMethodInvocation)
                                     && yieldStatement.Expression.Span.Contains(context.Span)
                                     && memberTypeSymbol?.IsNamedType() == true)
                                 {
@@ -83,7 +85,7 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 
                                         if (argumentSymbol != typeSymbol)
                                         {
-                                            AddCastExpressionRefactoring.RegisterRefactoring(
+                                            ModifyExpressionRefactoring.ComputeRefactoring(
                                                context,
                                                yieldStatement.Expression,
                                                argumentSymbol,
