@@ -5,11 +5,44 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 {
     internal static class ReplaceNullLiteralExpressionWithDefaultExpressionRefactoring
     {
+        public static async Task ComputeRefactoringAsync(RefactoringContext context, ExpressionSyntax expression)
+        {
+            if (expression?.IsKind(SyntaxKind.NullLiteralExpression) == true
+                && context.Span.IsBetweenSpans(expression)
+                && context.SupportsSemanticModel)
+            {
+                TextSpan span = context.Span;
+
+                if ((span.IsEmpty && expression.Span.Contains(span))
+                    || span.IsBetweenSpans(expression))
+                {
+                    SemanticModel semanticModel = await context.GetSemanticModelAsync().ConfigureAwait(false);
+
+                    ITypeSymbol typeSymbol = semanticModel.GetTypeInfo(expression).ConvertedType;
+
+                    if (typeSymbol?.SupportsExplicitDeclaration() == true)
+                    {
+                        context.RegisterRefactoring(
+                            $"Replace 'null' with 'default({typeSymbol.ToDisplayString(TypeSyntaxRefactoring.SymbolDisplayFormat)})'",
+                            cancellationToken =>
+                            {
+                                return RefactorAsync(
+                                    context.Document,
+                                    expression,
+                                    typeSymbol,
+                                    cancellationToken);
+                            });
+                    }
+                }
+            }
+        }
+
         public static async Task<Document> RefactorAsync(
             Document document,
             ExpressionSyntax expression,

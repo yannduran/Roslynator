@@ -4,13 +4,15 @@ using System.Text;
 
 namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings.Tests
 {
-    internal class ReplaceNullLiteralExpressionWithDefaultExpressionRefactoring
+    internal static class ReplaceNullLiteralExpressionWithDefaultExpressionRefactoring
     {
         private static class Foo
         {
-            public static void Bar(StringBuilder stringBuilder)
+            public static object Bar(StringBuilder stringBuilder = null)
             {
                 Bar(null);
+
+                return null;
             }
         }
     }

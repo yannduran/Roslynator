@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
 {
@@ -34,35 +33,6 @@ namespace Pihrtsoft.CodeAnalysis.CSharp.Refactorings
                                 parameterTypeSymbol,
                                 semanticModel);
                         }
-                    }
-                }
-            }
-
-            if (context.IsRefactoringEnabled(RefactoringIdentifiers.ReplaceNullLiteralExpressionWithDefaultExpression)
-                && expression?.IsKind(SyntaxKind.NullLiteralExpression) == true
-                && context.SupportsSemanticModel)
-            {
-                TextSpan span = context.Span;
-
-                if ((span.IsEmpty && expression.Span.Contains(span))
-                    || span.IsBetweenSpans(expression))
-                {
-                    SemanticModel semanticModel = await context.GetSemanticModelAsync().ConfigureAwait(false);
-
-                    ITypeSymbol typeSymbol = semanticModel.GetTypeInfo(expression).ConvertedType;
-
-                    if (typeSymbol?.SupportsExplicitDeclaration() == true)
-                    {
-                        context.RegisterRefactoring(
-                            $"Replace 'null' with 'default({typeSymbol.ToDisplayString(TypeSyntaxRefactoring.SymbolDisplayFormat)})'",
-                            cancellationToken =>
-                            {
-                                return ReplaceNullLiteralExpressionWithDefaultExpressionRefactoring.RefactorAsync(
-                                    context.Document,
-                                    expression,
-                                    typeSymbol,
-                                    cancellationToken);
-                            });
                     }
                 }
             }
