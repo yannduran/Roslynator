@@ -127,6 +127,7 @@ namespace Roslynator.VisualStudio
             ReplaceDoStatementWithWhileStatement = true;
             ReplaceEmptyStringLiteralWithStringEmpty = true;
             ReplaceEqualsExpressionWithStringEquals = true;
+            ReplaceEqualsExpressionWithStringIsNullOrEmpty = true;
             ReplaceFieldWithConstant = true;
             ReplaceForEachWithFor = true;
             ReplaceForWithForEach = true;
@@ -282,6 +283,7 @@ namespace Roslynator.VisualStudio
             SetIsEnabled(RefactoringIdentifiers.ReplaceDoStatementWithWhileStatement, ReplaceDoStatementWithWhileStatement);
             SetIsEnabled(RefactoringIdentifiers.ReplaceEmptyStringLiteralWithStringEmpty, ReplaceEmptyStringLiteralWithStringEmpty);
             SetIsEnabled(RefactoringIdentifiers.ReplaceEqualsExpressionWithStringEquals, ReplaceEqualsExpressionWithStringEquals);
+            SetIsEnabled(RefactoringIdentifiers.ReplaceEqualsExpressionWithStringIsNullOrEmpty, ReplaceEqualsExpressionWithStringIsNullOrEmpty);
             SetIsEnabled(RefactoringIdentifiers.ReplaceFieldWithConstant, ReplaceFieldWithConstant);
             SetIsEnabled(RefactoringIdentifiers.ReplaceForEachWithFor, ReplaceForEachWithFor);
             SetIsEnabled(RefactoringIdentifiers.ReplaceForWithForEach, ReplaceForWithForEach);
@@ -1462,9 +1464,19 @@ namespace Roslynator.VisualStudio
 
         [Category(RefactoringCategory)]
         [DisplayName("Replace equals expression with string.Equals")]
-        [Description("Syntax: equals expression\r\nScope: operator")]
+        [Description("Syntax: equals expression, not equals expression\r\nScope: operator")]
         [TypeConverter(typeof (EnabledDisabledConverter))]
         public bool ReplaceEqualsExpressionWithStringEquals
+        {
+            get;
+            set;
+        }
+
+        [Category(RefactoringCategory)]
+        [DisplayName("Replace equals expression with string.IsNullOrEmpty")]
+        [Description("Syntax: equals expression, not equals expression\r\nScope: operator")]
+        [TypeConverter(typeof (EnabledDisabledConverter))]
+        public bool ReplaceEqualsExpressionWithStringIsNullOrEmpty
         {
             get;
             set;
