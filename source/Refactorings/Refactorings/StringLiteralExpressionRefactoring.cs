@@ -36,7 +36,7 @@ namespace Roslynator.CSharp.Refactorings
 
             if (context.Span.IsBetweenSpans(literalExpression))
             {
-                string text = GetTextWithoutEnclosingChars(literalExpression);
+                string text = GetInnerText(literalExpression);
 
                 if (literalExpression.IsVerbatimStringLiteral())
                 {
@@ -131,7 +131,7 @@ namespace Roslynator.CSharp.Refactorings
             return -1;
         }
 
-        private static string GetTextWithoutEnclosingChars(LiteralExpressionSyntax literalExpression)
+        public static string GetInnerText(LiteralExpressionSyntax literalExpression)
         {
             string s = literalExpression.Token.Text;
 

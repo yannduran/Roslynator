@@ -77,6 +77,7 @@ namespace Roslynator.VisualStudio
             MergeAssignmentExpressionWithReturnStatement = true;
             MergeAttributes = true;
             MergeIfStatements = true;
+            MergeInterpolationIntoInterpolatedString = true;
             MergeLocalDeclarations = true;
             MergeStringLiterals = true;
             MergeStringLiteralsIntoMultilineStringLiteral = true;
@@ -232,6 +233,7 @@ namespace Roslynator.VisualStudio
             SetIsEnabled(RefactoringIdentifiers.MergeAssignmentExpressionWithReturnStatement, MergeAssignmentExpressionWithReturnStatement);
             SetIsEnabled(RefactoringIdentifiers.MergeAttributes, MergeAttributes);
             SetIsEnabled(RefactoringIdentifiers.MergeIfStatements, MergeIfStatements);
+            SetIsEnabled(RefactoringIdentifiers.MergeInterpolationIntoInterpolatedString, MergeInterpolationIntoInterpolatedString);
             SetIsEnabled(RefactoringIdentifiers.MergeLocalDeclarations, MergeLocalDeclarations);
             SetIsEnabled(RefactoringIdentifiers.MergeStringLiterals, MergeStringLiterals);
             SetIsEnabled(RefactoringIdentifiers.MergeStringLiteralsIntoMultilineStringLiteral, MergeStringLiteralsIntoMultilineStringLiteral);
@@ -965,6 +967,16 @@ namespace Roslynator.VisualStudio
         [Description("Syntax: selected if statements")]
         [TypeConverter(typeof (EnabledDisabledConverter))]
         public bool MergeIfStatements
+        {
+            get;
+            set;
+        }
+
+        [Category(RefactoringCategory)]
+        [DisplayName("Merge interpolation into interpolated string")]
+        [Description("Syntax: interpolation")]
+        [TypeConverter(typeof (EnabledDisabledConverter))]
+        public bool MergeInterpolationIntoInterpolatedString
         {
             get;
             set;
