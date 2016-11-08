@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Roslynator.CSharp.Refactorings.ReplaceEqualsExpression;
 
 namespace Roslynator.CSharp.Refactorings
 {
@@ -103,13 +104,12 @@ namespace Roslynator.CSharp.Refactorings
             if (context.IsRefactoringEnabled(RefactoringIdentifiers.ReplaceAsWithCast))
                 ReplaceAsWithCastRefactoring.ComputeRefactoring(context, binaryExpression);
 
-            if (context.Span.IsContainedInSpanOrBetweenSpans(binaryExpression.OperatorToken))
+            if (context.Span.IsContainedInSpanOrBetweenSpans(binaryExpression.OperatorToken)
+                && context.IsAnyRefactoringEnabled(
+                    RefactoringIdentifiers.ReplaceEqualsExpressionWithStringEquals,
+                    RefactoringIdentifiers.ReplaceEqualsExpressionWithStringIsNullOrWhiteSpace))
             {
-                if (context.IsRefactoringEnabled(RefactoringIdentifiers.ReplaceEqualsExpressionWithStringEquals))
-                    await ReplaceEqualsExpressionWithStringEqualsRefactoring.ComputeRefactoringAsync(context, binaryExpression).ConfigureAwait(false);
-
-                if (context.IsRefactoringEnabled(RefactoringIdentifiers.ReplaceEqualsExpressionWithStringIsNullOrEmpty))
-                    await ReplaceEqualsExpressionWithStringIsNullOrEmptyRefactoring.ComputeRefactoringAsync(context, binaryExpression).ConfigureAwait(false);
+                await ReplaceEqualsExpressionRefactoring.ComputeRefactoringsAsync(context, binaryExpression).ConfigureAwait(false);
             }
         }
     }

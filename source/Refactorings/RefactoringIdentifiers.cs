@@ -122,6 +122,7 @@ namespace Roslynator.CSharp.Refactorings
         public const string ReplaceEmptyStringLiteralWithStringEmpty = "ReplaceEmptyStringLiteralWithStringEmpty";
         public const string ReplaceEqualsExpressionWithStringEquals = "ReplaceEqualsExpressionWithStringEquals";
         public const string ReplaceEqualsExpressionWithStringIsNullOrEmpty = "ReplaceEqualsExpressionWithStringIsNullOrEmpty";
+        public const string ReplaceEqualsExpressionWithStringIsNullOrWhiteSpace = "ReplaceEqualsExpressionWithStringIsNullOrWhiteSpace";
         public const string ReplaceFieldWithConstant = "ReplaceFieldWithConstant";
         public const string ReplaceForEachWithFor = "ReplaceForEachWithFor";
         public const string ReplaceForWithForEach = "ReplaceForWithForEach";

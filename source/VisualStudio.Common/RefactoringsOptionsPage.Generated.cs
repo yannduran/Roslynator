@@ -128,6 +128,7 @@ namespace Roslynator.VisualStudio
             ReplaceEmptyStringLiteralWithStringEmpty = true;
             ReplaceEqualsExpressionWithStringEquals = true;
             ReplaceEqualsExpressionWithStringIsNullOrEmpty = true;
+            ReplaceEqualsExpressionWithStringIsNullOrWhiteSpace = true;
             ReplaceFieldWithConstant = true;
             ReplaceForEachWithFor = true;
             ReplaceForWithForEach = true;
@@ -284,6 +285,7 @@ namespace Roslynator.VisualStudio
             SetIsEnabled(RefactoringIdentifiers.ReplaceEmptyStringLiteralWithStringEmpty, ReplaceEmptyStringLiteralWithStringEmpty);
             SetIsEnabled(RefactoringIdentifiers.ReplaceEqualsExpressionWithStringEquals, ReplaceEqualsExpressionWithStringEquals);
             SetIsEnabled(RefactoringIdentifiers.ReplaceEqualsExpressionWithStringIsNullOrEmpty, ReplaceEqualsExpressionWithStringIsNullOrEmpty);
+            SetIsEnabled(RefactoringIdentifiers.ReplaceEqualsExpressionWithStringIsNullOrWhiteSpace, ReplaceEqualsExpressionWithStringIsNullOrWhiteSpace);
             SetIsEnabled(RefactoringIdentifiers.ReplaceFieldWithConstant, ReplaceFieldWithConstant);
             SetIsEnabled(RefactoringIdentifiers.ReplaceForEachWithFor, ReplaceForEachWithFor);
             SetIsEnabled(RefactoringIdentifiers.ReplaceForWithForEach, ReplaceForWithForEach);
@@ -1477,6 +1479,16 @@ namespace Roslynator.VisualStudio
         [Description("Syntax: equals expression, not equals expression\r\nScope: operator")]
         [TypeConverter(typeof (EnabledDisabledConverter))]
         public bool ReplaceEqualsExpressionWithStringIsNullOrEmpty
+        {
+            get;
+            set;
+        }
+
+        [Category(RefactoringCategory)]
+        [DisplayName("Replace equals expression with string.IsNullOrWhiteSpace")]
+        [Description("Syntax: equals expression, not equals expression\r\nScope: operator")]
+        [TypeConverter(typeof (EnabledDisabledConverter))]
+        public bool ReplaceEqualsExpressionWithStringIsNullOrWhiteSpace
         {
             get;
             set;

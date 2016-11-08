@@ -809,6 +809,13 @@
     </Syntaxes>
     <Scope>operator</Scope>
   </Refactoring>
+  <Refactoring Id="ReplaceEqualsExpressionWithStringIsNullOrWhiteSpace" Title="Replace equals expression with string.IsNullOrWhiteSpace" ExtensionVersion="0.0.0">
+    <Syntaxes>
+      <Syntax>equals expression</Syntax>
+      <Syntax>not equals expression</Syntax>
+    </Syntaxes>
+    <Scope>operator</Scope>
+  </Refactoring>
   <Refactoring Id="ReplaceFieldWithConstant" Title="Replace field with constant" ExtensionVersion="0.9.0">
     <Syntaxes>
       <Syntax>read-only field</Syntax>
